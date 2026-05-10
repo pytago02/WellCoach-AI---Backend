@@ -16,7 +16,7 @@ app.use(cors({ origin: '*' }));
 app.use(express.json());
 
 // Serve frontend
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, '/frontend')));
 
 // API Routes
 app.use('/api/auth', authRoutes);

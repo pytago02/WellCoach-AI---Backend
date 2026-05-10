@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WellCoach AI – Personal Wellness Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal: #1D9E75;
+    --teal-light: #E1F5EE;
+    --teal-mid: #5DCAA5;
+    --teal-dark: #085041;
+    --amber: #EF9F27;
+    --amber-light: #FAEEDA;
+    --coral: #D85A30;
+    --coral-light: #FAECE7;
+    --purple: #7F77DD;
+    --purple-light: #EEEDFE;
+    --surface: #FAFAF8;
+    --card: #FFFFFF;
+    --border: #E8E6DF;
+    --text: #2C2C2A;
+    --text-muted: #888780;
+    --text-light: #B4B2A9;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--surface);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ─── AUTH SCREEN ─── */
+  #auth-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 50%, var(--teal-mid) 100%);
+  }
+
+  .auth-box {
+    background: var(--card);
+    border-radius: 24px;
+    padding: 40px;
+    width: 420px;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+  }
+
+  .auth-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .auth-logo-icon {
+    width: 44px; height: 44px;
+    background: var(--teal);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .auth-logo-icon svg { width: 24px; height: 24px; stroke: white; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+  .auth-title { font-family: 'DM Serif Display', serif; font-size: 24px; font-weight: 400; }
+  .auth-sub { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+  .auth-tabs {
+    display: flex;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 24px;
+  }
+
+  .auth-tab {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--text-muted);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.15s;
+  }
+
+  .auth-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+  .auth-field { margin-bottom: 14px; }
+  .auth-field label { display: block; font-size: 12px; font-weight: 500; color: var(--text-muted); margin-bottom: 6px; letter-spacing: 0.04em; }
+  .auth-field input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--surface);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .auth-field input:focus { border-color: var(--teal); background: var(--card); }
+
+  .auth-btn {
+    width: 100%;
+    padding: 13px;
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.15s;
+  }
+  .auth-btn:hover { background: var(--teal-dark); }
+  .auth-btn:disabled { background: var(--teal-mid); cursor: not-allowed; }
+
+  .auth-error {
+    background: var(--coral-light);
+    color: var(--coral);
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    margin-bottom: 14px;
+    display: none;
+  }
+
+  /* ─── APP ─── */
+  #app-screen {
+    display: none;
+    grid-template-columns: 320px 1fr;
+    grid-template-rows: auto 1fr;
+    max-width: 1100px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  header {
+    grid-column: 1 / -1;
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--card);
+  }
+
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-icon {
+    width: 40px; height: 40px;
+    background: var(--teal);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo-icon svg { width: 22px; height: 22px; stroke: white; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+  h1 { font-family: 'DM Serif Display', serif; font-size: 22px; font-weight: 400; }
+  .tagline { font-size: 13px; color: var(--text-muted); margin-top: 1px; }
+
+  .header-right { display: flex; align-items: center; gap: 12px; }
+
+  .user-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: var(--teal-light);
+    border-radius: 20px;
+    font-size: 13px;
+    color: var(--teal-dark);
+    font-weight: 500;
+  }
+
+  .streak-badge {
+    padding: 6px 12px;
+    background: var(--amber-light);
+    border-radius: 20px;
+    font-size: 13px;
+    color: #8B5E00;
+    font-weight: 500;
+  }
+
+  .logout-btn {
+    padding: 6px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.15s;
+  }
+  .logout-btn:hover { border-color: var(--coral); color: var(--coral); }
+
+  /* Sidebar */
+  .sidebar {
+    padding: 24px 20px;
+    border-right: 1px solid var(--border);
+    background: var(--card);
+    overflow-y: auto;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 14px;
+  }
+
+  .checkin-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+
+  .metric-row { margin-bottom: 18px; }
+  .metric-row:last-child { margin-bottom: 0; }
+
+  .metric-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .metric-label { font-size: 13px; font-weight: 500; color: var(--text); display: flex; align-items: center; gap: 6px; }
+  .metric-emoji { font-size: 15px; }
+  .metric-value { font-size: 13px; font-weight: 500; color: var(--teal); min-width: 36px; text-align: right; }
+
+  input[type="range"] {
+    -webkit-appearance: none; width: 100%; height: 4px;
+    background: var(--border); border-radius: 2px; outline: none; cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 18px; height: 18px;
+    background: var(--teal); border-radius: 50%; cursor: pointer;
+    border: 2px solid white; box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+
+  .mood-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 4px; }
+  .mood-btn {
+    padding: 8px 4px; border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm); background: var(--card);
+    cursor: pointer; font-size: 18px; text-align: center; transition: all 0.15s;
+  }
+  .mood-btn:hover { border-color: var(--teal-mid); background: var(--teal-light); }
+  .mood-btn.selected { border-color: var(--teal); background: var(--teal-light); }
+
+  .notes-field {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    resize: none;
+    height: 60px;
+    outline: none;
+    color: var(--text);
+    background: var(--card);
+    margin-top: 12px;
+    transition: border-color 0.15s;
+  }
+  .notes-field:focus { border-color: var(--teal); }
+  .notes-field::placeholder { color: var(--text-light); }
+
+  .submit-btn {
+    width: 100%;
+    padding: 13px;
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    margin-top: 16px;
+  }
+  .submit-btn:hover { background: var(--teal-dark); }
+  .submit-btn:active { transform: scale(0.98); }
+  .submit-btn:disabled { background: var(--teal-mid); cursor: not-allowed; }
+
+  /* Stats card */
+  .stats-card {
+    background: linear-gradient(135deg, var(--teal-light), #fff);
+    border: 1px solid var(--teal-mid);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+  }
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .stat-item { text-align: center; }
+  .stat-num { font-size: 20px; font-weight: 500; color: var(--teal-dark); font-family: 'DM Serif Display', serif; }
+  .stat-lbl { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  .history-section { margin-top: 20px; }
+  .history-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    margin-bottom: 8px; font-size: 13px;
+    cursor: pointer; transition: border-color 0.15s;
+  }
+  .history-item:hover { border-color: var(--teal-mid); }
+  .history-date { color: var(--text-muted); font-size: 12px; }
+  .history-dots { display: flex; gap: 5px; }
+  .hdot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* Chat panel */
+  .chat-panel {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 81px);
+  }
+
+  .chat-header {
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--card);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .coach-info { display: flex; align-items: center; gap: 12px; }
+  .coach-avatar {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--teal-light), var(--teal-mid));
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+  }
+  .coach-name { font-size: 14px; font-weight: 500; }
+  .coach-status { font-size: 12px; color: var(--teal); }
+
+  .api-key-section { display: flex; align-items: center; gap: 8px; }
+  .api-input {
+    width: 200px; padding: 7px 12px;
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif; font-size: 12px;
+    color: var(--text-muted); background: var(--surface); outline: none;
+    transition: border-color 0.15s;
+  }
+  .api-input:focus { border-color: var(--teal); }
+
+  .save-key-btn {
+    padding: 7px 14px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    font-size: 12px; font-weight: 500; cursor: pointer; color: var(--text);
+    transition: all 0.15s; white-space: nowrap;
+  }
+  .save-key-btn:hover { background: var(--teal-light); border-color: var(--teal); color: var(--teal-dark); }
+
+  .clear-chat-btn {
+    padding: 7px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.15s;
+  }
+  .clear-chat-btn:hover { border-color: var(--coral); color: var(--coral); }
+
+  .today-bar {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 8px; padding: 10px 24px;
+    border-bottom: 1px solid var(--border); background: var(--card);
+  }
+  .stat-pill {
+    display: flex; align-items: center; gap: 7px;
+    padding: 7px 12px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 20px;
+    font-size: 12px; white-space: nowrap;
+  }
+  .stat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .no-log-msg {
+    font-size: 12px; color: var(--text-light);
+    text-align: center; padding: 8px;
+    grid-column: 1 / -1; font-style: italic;
+  }
+
+  .messages {
+    flex: 1; overflow-y: auto; padding: 24px;
+    display: flex; flex-direction: column; gap: 16px;
+    background: var(--surface);
+  }
+
+  .msg { max-width: 75%; animation: fadeUp 0.2s ease; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .msg.user { align-self: flex-end; }
+  .msg.ai { align-self: flex-start; }
+
+  .msg-bubble { padding: 13px 17px; border-radius: 18px; font-size: 14px; line-height: 1.6; }
+  .msg.user .msg-bubble { background: var(--teal); color: white; border-bottom-right-radius: 5px; }
+  .msg.ai .msg-bubble {
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--text); border-bottom-left-radius: 5px;
+  }
+  .msg-time { font-size: 11px; color: var(--text-light); margin-top: 4px; padding: 0 4px; }
+  .msg.user .msg-time { text-align: right; }
+
+  .typing-indicator {
+    display: flex; gap: 5px; padding: 14px 18px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
+  }
+  .typing-dot {
+    width: 7px; height: 7px; background: var(--text-light);
+    border-radius: 50%; animation: bounce 1.3s infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+  }
+
+  .quick-prompts {
+    display: flex; flex-wrap: wrap; gap: 7px;
+    padding: 12px 24px; border-top: 1px solid var(--border);
+    background: var(--card);
+  }
+  .qp-btn {
+    padding: 6px 13px; border: 1px solid var(--border);
+    border-radius: 20px; font-size: 12px; cursor: pointer;
+    background: var(--surface); color: var(--text); transition: all 0.15s; white-space: nowrap;
+  }
+  .qp-btn:hover { background: var(--teal-light); border-color: var(--teal); color: var(--teal-dark); }
+
+  .chat-input-area {
+    padding: 14px 24px 18px; border-top: 1px solid var(--border);
+    background: var(--card); display: flex; gap: 10px; align-items: flex-end;
+  }
+  .chat-textarea {
+    flex: 1; padding: 11px 16px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif;
+    font-size: 14px; resize: none; outline: none;
+    min-height: 44px; max-height: 120px; overflow-y: auto;
+    background: var(--surface); color: var(--text); transition: border-color 0.15s; line-height: 1.5;
+  }
+  .chat-textarea:focus { border-color: var(--teal); background: var(--card); }
+  .chat-textarea::placeholder { color: var(--text-light); }
+
+  .send-btn {
+    width: 44px; height: 44px; background: var(--teal);
+    border: none; border-radius: var(--radius-sm); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s, transform 0.1s; flex-shrink: 0;
+  }
+  .send-btn:hover { background: var(--teal-dark); }
+  .send-btn:active { transform: scale(0.95); }
+  .send-btn svg { width: 18px; height: 18px; stroke: white; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .empty-state {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; flex: 1; gap: 10px;
+    color: var(--text-muted); text-align: center; padding: 40px;
+  }
+  .empty-icon { font-size: 40px; margin-bottom: 4px; }
+  .empty-title { font-size: 16px; font-weight: 500; color: var(--text); }
+  .empty-sub { font-size: 13px; line-height: 1.6; max-width: 300px; }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(60px);
+    background: var(--teal-dark); color: white;
+    padding: 10px 22px; border-radius: 30px;
+    font-size: 13px; font-weight: 500;
+    transition: transform 0.3s ease; z-index: 999; pointer-events: none;
+  }
+  .toast.error { background: var(--coral); }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  .loading-overlay {
+    position: fixed; inset: 0;
+    background: rgba(255,255,255,0.85);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 100;
+    font-size: 14px; color: var(--text-muted);
+    flex-direction: column; gap: 12px;
+  }
+
+  .spinner {
+    width: 32px; height: 32px;
+    border: 3px solid var(--border);
+    border-top-color: var(--teal);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<!-- ─── AUTH SCREEN ─── -->
+<div id="auth-screen">
+  <div class="auth-box">
+    <div class="auth-logo">
+      <div class="auth-logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+      </div>
+      <div>
+        <div class="auth-title">WellCoach AI</div>
+        <div class="auth-sub">Your personal wellness companion</div>
+      </div>
+    </div>
+
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="tab-login" onclick="switchTab('login')">Sign In</div>
+      <div class="auth-tab" id="tab-register" onclick="switchTab('register')">Create Account</div>
+    </div>
+
+    <div class="auth-error" id="auth-error"></div>
+
+    <!-- Login form -->
+    <div id="form-login">
+      <div class="auth-field">
+        <label>EMAIL</label>
+        <input type="email" id="login-email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <div class="auth-field">
+        <label>PASSWORD</label>
+        <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"
+          onkeydown="if(event.key==='Enter') doLogin()">
+      </div>
+      <button class="auth-btn" id="login-btn" onclick="doLogin()">Sign In</button>
+    </div>
+
+    <!-- Register form -->
+    <div id="form-register" style="display:none">
+      <div class="auth-field">
+        <label>FULL NAME</label>
+        <input type="text" id="reg-name" placeholder="Your name" autocomplete="name">
+      </div>
+      <div class="auth-field">
+        <label>EMAIL</label>
+        <input type="email" id="reg-email" placeholder="you@example.com" autocomplete="email">
+      </div>
+      <div class="auth-field">
+        <label>PASSWORD (min. 6 characters)</label>
+        <input type="password" id="reg-password" placeholder="••••••••" autocomplete="new-password"
+          onkeydown="if(event.key==='Enter') doRegister()">
+      </div>
+      <button class="auth-btn" id="register-btn" onclick="doRegister()">Create Account</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── APP SCREEN ─── -->
+<div id="app-screen">
+
+  <header>
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+      </div>
+      <div>
+        <h1>WellCoach AI</h1>
+        <div class="tagline">Your personal wellness companion</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="streak-badge" id="streak-badge" style="display:none">🔥 0-day streak</div>
+      <div class="user-badge">👤 <span id="user-name-display">—</span></div>
+      <button class="logout-btn" onclick="doLogout()">Sign out</button>
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="section-label">Today's Check-in</div>
+
+    <div class="checkin-card">
+      <div class="metric-row">
+        <div class="metric-header">
+          <div class="metric-label"><span class="metric-emoji">😴</span> Sleep</div>
+          <div class="metric-value" id="sleep-val">7h</div>
+        </div>
+        <input type="range" min="3" max="12" step="0.5" value="7" id="sleep-slider" oninput="updateSlider('sleep')">
+      </div>
+      <div class="metric-row">
+        <div class="metric-header">
+          <div class="metric-label"><span class="metric-emoji">💧</span> Water</div>
+          <div class="metric-value" id="water-val">6 glasses</div>
+        </div>
+        <input type="range" min="0" max="12" step="1" value="6" id="water-slider" oninput="updateSlider('water')">
+      </div>
+      <div class="metric-row">
+        <div class="metric-header">
+          <div class="metric-label"><span class="metric-emoji">🏃</span> Exercise</div>
+          <div class="metric-value" id="exercise-val">30 min</div>
+        </div>
+        <input type="range" min="0" max="120" step="5" value="30" id="exercise-slider" oninput="updateSlider('exercise')">
+      </div>
+      <div class="metric-row">
+        <div class="metric-header">
+          <div class="metric-label"><span class="metric-emoji">🌡️</span> Stress</div>
+          <div class="metric-value" id="stress-val">5/10</div>
+        </div>
+        <input type="range" min="1" max="10" step="1" value="5" id="stress-slider" oninput="updateSlider('stress')">
+      </div>
+      <div class="metric-row">
+        <div class="metric-label" style="margin-bottom: 10px;"><span class="metric-emoji">😊</span> Mood</div>
+        <div class="mood-grid" id="mood-grid">
+          <button class="mood-btn" onclick="selectMood(this, '😞')">😞</button>
+          <button class="mood-btn" onclick="selectMood(this, '😕')">😕</button>
+          <button class="mood-btn selected" onclick="selectMood(this, '😐')">😐</button>
+          <button class="mood-btn" onclick="selectMood(this, '🙂')">🙂</button>
+          <button class="mood-btn" onclick="selectMood(this, '😄')">😄</button>
+        </div>
+      </div>
+      <textarea class="notes-field" id="notes-field" placeholder="Optional notes (how are you feeling?)…" rows="2"></textarea>
+      <button class="submit-btn" id="log-btn" onclick="logDay()">✓ Log Today</button>
+    </div>
+
+    <!-- Weekly stats -->
+    <div class="stats-card" id="stats-card" style="display:none">
+      <div class="section-label" style="margin-bottom:10px">7-Day Averages</div>
+      <div class="stats-grid">
+        <div class="stat-item"><div class="stat-num" id="stat-sleep">—</div><div class="stat-lbl">Avg Sleep</div></div>
+        <div class="stat-item"><div class="stat-num" id="stat-water">—</div><div class="stat-lbl">Avg Water</div></div>
+        <div class="stat-item"><div class="stat-num" id="stat-exercise">—</div><div class="stat-lbl">Avg Exercise</div></div>
+        <div class="stat-item"><div class="stat-num" id="stat-stress">—</div><div class="stat-lbl">Avg Stress</div></div>
+      </div>
+    </div>
+
+    <div class="history-section">
+      <div class="section-label">Recent Logs</div>
+      <div id="history-list">
+        <div style="font-size:12px; color: var(--text-light); text-align:center; padding: 12px; font-style: italic;">Loading…</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Chat -->
+  <div class="chat-panel">
+    <div class="chat-header">
+      <div class="coach-info">
+        <div class="coach-avatar">🌿</div>
+        <div>
+          <div class="coach-name">Wellness Coach</div>
+          <div class="coach-status" id="coach-status">● Ready</div>
+        </div>
+      </div>
+      <div class="api-key-section">
+        <input type="password" class="api-input" id="api-key-input" placeholder="Paste Anthropic API key…">
+        <button class="save-key-btn" onclick="saveKey()">Connect</button>
+        <button class="clear-chat-btn" onclick="clearChat()" title="Clear chat history">🗑 Clear</button>
+      </div>
+    </div>
+
+    <div class="today-bar" id="today-bar">
+      <div class="no-log-msg">Log your day to see today's stats here</div>
+    </div>
+
+    <div class="messages" id="messages">
+      <div class="empty-state" id="empty-state">
+        <div class="empty-icon">🌱</div>
+        <div class="empty-title">Welcome to WellCoach AI</div>
+        <div class="empty-sub">Log today's check-in on the left, then chat with your AI coach about your wellness — ask anything, from sleep tips to stress management.</div>
+      </div>
+    </div>
+
+    <div class="quick-prompts">
+      <button class="qp-btn" onclick="sendQuick('How am I doing this week?')">📊 Weekly summary</button>
+      <button class="qp-btn" onclick="sendQuick('What can I do to sleep better?')">😴 Sleep tips</button>
+      <button class="qp-btn" onclick="sendQuick('I\'m feeling stressed. What should I do?')">🌡️ Stress help</button>
+      <button class="qp-btn" onclick="sendQuick('Give me a wellness tip for today')">💡 Daily tip</button>
+      <button class="qp-btn" onclick="sendQuick('What patterns do you see in my recent logs?')">🔍 My patterns</button>
+    </div>
+
+    <div class="chat-input-area">
+      <textarea class="chat-textarea" id="chat-input"
+        placeholder="Ask your wellness coach anything…" rows="1"
+        onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+      <button class="send-btn" onclick="sendMessage()">
+        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ─── CONFIG ───
+  const API_BASE = window.location.origin + '/api';
+
+  // ─── STATE ───
+  let token = localStorage.getItem('wc_token') || null;
+  let currentUser = null;
+  let selectedMood = '😐';
+  let apiKey = '';
+
+  // ─── INIT ───
+  window.onload = async () => {
+    if (token) {
+      await loadApp();
+    }
+    // else stay on auth screen
+  };
+
+  // ─── AUTH ───
+  function switchTab(tab) {
+    document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+    document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+    document.getElementById('form-login').style.display = tab === 'login' ? 'block' : 'none';
+    document.getElementById('form-register').style.display = tab === 'register' ? 'block' : 'none';
+    document.getElementById('auth-error').style.display = 'none';
+  }
+
+  function setAuthError(msg) {
+    const el = document.getElementById('auth-error');
+    el.textContent = msg;
+    el.style.display = msg ? 'block' : 'none';
+  }
+
+  async function doLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    if (!email || !password) return setAuthError('Please enter email and password');
+
+    const btn = document.getElementById('login-btn');
+    btn.disabled = true; btn.textContent = 'Signing in…';
+    setAuthError('');
+
+    try {
+      const res = await fetch(`${API_BASE}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Login failed');
+      token = data.token;
+      localStorage.setItem('wc_token', token);
+      await loadApp();
+    } catch (e) {
+      setAuthError(e.message);
+    } finally {
+      btn.disabled = false; btn.textContent = 'Sign In';
+    }
+  }
+
+  async function doRegister() {
+    const name = document.getElementById('reg-name').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const password = document.getElementById('reg-password').value;
+    if (!name || !email || !password) return setAuthError('Please fill all fields');
+
+    const btn = document.getElementById('register-btn');
+    btn.disabled = true; btn.textContent = 'Creating account…';
+    setAuthError('');
+
+    try {
+      const res = await fetch(`${API_BASE}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Registration failed');
+      token = data.token;
+      localStorage.setItem('wc_token', token);
+      await loadApp();
+    } catch (e) {
+      setAuthError(e.message);
+    } finally {
+      btn.disabled = false; btn.textContent = 'Create Account';
+    }
+  }
+
+  function doLogout() {
+    localStorage.removeItem('wc_token');
+    token = null;
+    currentUser = null;
+    apiKey = '';
+    document.getElementById('auth-screen').style.display = 'flex';
+    document.getElementById('app-screen').style.display = 'none';
+    document.getElementById('messages').innerHTML = '<div class="empty-state" id="empty-state"><div class="empty-icon">🌱</div><div class="empty-title">Welcome to WellCoach AI</div><div class="empty-sub">Log today\'s check-in on the left, then chat with your AI coach.</div></div>';
+  }
+
+  // ─── APP LOAD ───
+  async function loadApp() {
+    try {
+      // Get user profile
+      const res = await authFetch('/auth/me');
+      if (!res.ok) { doLogout(); return; }
+      currentUser = await res.json();
+
+      document.getElementById('auth-screen').style.display = 'none';
+      document.getElementById('app-screen').style.display = 'grid';
+      document.getElementById('user-name-display').textContent = currentUser.name;
+
+      // Load stored API key if available
+      if (currentUser.hasApiKey) {
+        const keyRes = await authFetch('/auth/apikey');
+        if (keyRes.ok) {
+          const { apiKey: storedKey } = await keyRes.json();
+          if (storedKey) {
+            apiKey = storedKey;
+            const input = document.getElementById('api-key-input');
+            input.value = '•'.repeat(Math.min(storedKey.length, 20));
+            document.getElementById('coach-status').textContent = '● Connected';
+          }
+        }
+      }
+
+      await loadLogs();
+      await loadStats();
+      await loadChatHistory();
+    } catch (e) {
+      console.error('loadApp error:', e);
+      doLogout();
+    }
+  }
+
+  // ─── HELPERS ───
+  function authFetch(path, opts = {}) {
+    return fetch(API_BASE + path, {
+      ...opts,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token,
+        ...(opts.headers || {})
+      }
+    });
+  }
+
+  // ─── LOGS ───
+  let logs = [];
+
+  async function loadLogs() {
+    const res = await authFetch('/logs');
+    if (!res.ok) return;
+    logs = await res.json();
+    updateHistoryList();
+
+    // Update today's bar if we have a log from today
+    const todayStr = new Date().toISOString().split('T')[0];
+    const todayLog = logs.find(l => l.log_date === todayStr);
+    if (todayLog) {
+      updateTodayBar(todayLog);
+      // Pre-fill sliders
+      document.getElementById('sleep-slider').value = todayLog.sleep;
+      document.getElementById('water-slider').value = todayLog.water;
+      document.getElementById('exercise-slider').value = todayLog.exercise;
+      document.getElementById('stress-slider').value = todayLog.stress;
+      updateSlider('sleep'); updateSlider('water');
+      updateSlider('exercise'); updateSlider('stress');
+      // Pre-set mood
+      document.querySelectorAll('.mood-btn').forEach(b => {
+        b.classList.toggle('selected', b.textContent === todayLog.mood);
+      });
+      selectedMood = todayLog.mood;
+    }
+  }
+
+  async function loadStats() {
+    const res = await authFetch('/logs/stats');
+    if (!res.ok) return;
+    const stats = await res.json();
+
+    if (stats.total_days > 0) {
+      document.getElementById('stats-card').style.display = 'block';
+      document.getElementById('stat-sleep').textContent = (stats.avg_sleep || 0) + 'h';
+      document.getElementById('stat-water').textContent = (stats.avg_water || 0) + ' 💧';
+      document.getElementById('stat-exercise').textContent = (stats.avg_exercise || 0) + 'm';
+      document.getElementById('stat-stress').textContent = (stats.avg_stress || 0) + '/10';
+    }
+
+    if (stats.streak > 0) {
+      const badge = document.getElementById('streak-badge');
+      badge.style.display = 'block';
+      badge.textContent = `🔥 ${stats.streak}-day streak`;
+    }
+  }
+
+  async function logDay() {
+    const btn = document.getElementById('log-btn');
+    btn.disabled = true; btn.textContent = 'Saving…';
+
+    const entry = {
+      sleep: parseFloat(document.getElementById('sleep-slider').value),
+      water: parseInt(document.getElementById('water-slider').value),
+      exercise: parseInt(document.getElementById('exercise-slider').value),
+      stress: parseInt(document.getElementById('stress-slider').value),
+      mood: selectedMood,
+      notes: document.getElementById('notes-field').value.trim() || null,
+      log_date: new Date().toISOString().split('T')[0]
+    };
+
+    try {
+      const res = await authFetch('/logs', {
+        method: 'POST',
+        body: JSON.stringify(entry)
+      });
+      if (!res.ok) {
+        const d = await res.json();
+        throw new Error(d.error || 'Failed to save');
+      }
+      const saved = await res.json();
+      showToast(saved.updated ? '✓ Log updated!' : '✓ Today logged!');
+      updateTodayBar(saved);
+      await loadLogs();
+      await loadStats();
+      hideEmptyState();
+    } catch (e) {
+      showToast('❌ ' + e.message, true);
+    } finally {
+      btn.disabled = false; btn.textContent = '✓ Log Today';
+    }
+  }
+
+  function updateTodayBar(entry) {
+    const bar = document.getElementById('today-bar');
+    const sleepColor = entry.sleep >= 7 ? '#1D9E75' : entry.sleep >= 6 ? '#EF9F27' : '#D85A30';
+    const waterColor = entry.water >= 8 ? '#1D9E75' : entry.water >= 5 ? '#EF9F27' : '#D85A30';
+    const exColor = entry.exercise >= 30 ? '#1D9E75' : entry.exercise >= 15 ? '#EF9F27' : '#D85A30';
+    const stressColor = entry.stress <= 4 ? '#1D9E75' : entry.stress <= 7 ? '#EF9F27' : '#D85A30';
+    bar.innerHTML = `
+      <div class="stat-pill"><div class="stat-dot" style="background:${sleepColor}"></div>Sleep: ${entry.sleep}h</div>
+      <div class="stat-pill"><div class="stat-dot" style="background:${waterColor}"></div>Water: ${entry.water} glasses</div>
+      <div class="stat-pill"><div class="stat-dot" style="background:${exColor}"></div>Exercise: ${entry.exercise} min</div>
+      <div class="stat-pill"><div class="stat-dot" style="background:${stressColor}"></div>Stress: ${entry.stress}/10 ${entry.mood}</div>
+    `;
+  }
+
+  function updateHistoryList() {
+    const list = document.getElementById('history-list');
+    if (!logs.length) {
+      list.innerHTML = '<div style="font-size:12px; color: var(--text-light); text-align:center; padding: 12px; font-style: italic;">No logs yet. Complete your first check-in!</div>';
+      return;
+    }
+    list.innerHTML = logs.slice(0, 7).map(l => {
+      const sleepOk = l.sleep >= 7;
+      const waterOk = l.water >= 8;
+      const exOk = l.exercise >= 30;
+      const stressOk = l.stress <= 5;
+      const dateStr = new Date(l.log_date).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+      return `<div class="history-item">
+        <div>
+          <div style="font-size:13px; font-weight:500;">${dateStr}</div>
+          <div class="history-date">${l.mood} ${l.sleep}h · ${l.water}💧 · ${l.exercise}min</div>
+        </div>
+        <div class="history-dots">
+          <div class="hdot" style="background:${sleepOk?'#1D9E75':'#D85A30'}" title="Sleep"></div>
+          <div class="hdot" style="background:${waterOk?'#1D9E75':'#EF9F27'}" title="Water"></div>
+          <div class="hdot" style="background:${exOk?'#1D9E75':'#EF9F27'}" title="Exercise"></div>
+          <div class="hdot" style="background:${stressOk?'#1D9E75':'#D85A30'}" title="Stress"></div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // ─── CHAT ───
+  async function loadChatHistory() {
+    const res = await authFetch('/chat/history?limit=30');
+    if (!res.ok) return;
+    const messages = await res.json();
+    if (messages.length > 0) {
+      hideEmptyState();
+      messages.forEach(m => {
+        if (m.role === 'user') addUserMessage(m.content, new Date(m.created_at));
+        else addAIMessage(m.content, new Date(m.created_at));
+      });
+    }
+  }
+
+  async function clearChat() {
+    if (!confirm('Clear all chat history?')) return;
+    await authFetch('/chat/history', { method: 'DELETE' });
+    document.getElementById('messages').innerHTML = '<div class="empty-state" id="empty-state"><div class="empty-icon">🌱</div><div class="empty-title">Chat cleared</div><div class="empty-sub">Start a new conversation with your wellness coach.</div></div>';
+    showToast('Chat history cleared');
+  }
+
+  async function saveKey() {
+    const input = document.getElementById('api-key-input');
+    const key = input.value.trim();
+    if (!key || key.includes('•')) {
+      showToast('Please enter a new API key');
+      return;
+    }
+    apiKey = key;
+    input.value = '•'.repeat(Math.min(key.length, 20));
+
+    // Save to backend
+    await authFetch('/auth/apikey', {
+      method: 'PUT',
+      body: JSON.stringify({ apiKey: key })
+    });
+
+    document.getElementById('coach-status').textContent = '● Connected';
+    document.getElementById('coach-status').style.color = 'var(--teal)';
+    showToast('✅ API key saved & connected!');
+    hideEmptyState();
+    addAIMessage(`Hello, ${currentUser?.name || 'there'}! 👋 I'm your WellCoach AI. I can see you've connected — log your daily check-in on the left, and I'll give you personalised wellness insights. What would you like to work on today?`);
+  }
+
+  async function sendMessage() {
+    const input = document.getElementById('chat-input');
+    const text = input.value.trim();
+    if (!text) return;
+
+    if (!apiKey) {
+      showToast('Please paste your Anthropic API key first', true);
+      return;
+    }
+
+    hideEmptyState();
+    addUserMessage(text);
+    input.value = '';
+    input.style.height = 'auto';
+    showTyping();
+
+    document.getElementById('coach-status').textContent = '● Thinking…';
+
+    try {
+      const res = await authFetch('/chat/send', {
+        method: 'POST',
+        body: JSON.stringify({ message: text })
+      });
+      removeTyping();
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'API error');
+
+      addAIMessage(data.reply);
+      document.getElementById('coach-status').textContent = '● Ready';
+      document.getElementById('coach-status').style.color = 'var(--teal)';
+    } catch (e) {
+      removeTyping();
+      addAIMessage('⚠️ ' + e.message);
+      document.getElementById('coach-status').textContent = '● Error';
+      document.getElementById('coach-status').style.color = 'var(--coral)';
+    }
+  }
+
+  function sendQuick(text) {
+    document.getElementById('chat-input').value = text;
+    sendMessage();
+  }
+
+  function addUserMessage(text, date) {
+    const msgs = document.getElementById('messages');
+    const time = (date || new Date()).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    const div = document.createElement('div');
+    div.className = 'msg user';
+    div.innerHTML = `<div class="msg-bubble">${escapeHtml(text)}</div><div class="msg-time">${time}</div>`;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function addAIMessage(text, date) {
+    const msgs = document.getElementById('messages');
+    const time = (date || new Date()).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    const div = document.createElement('div');
+    div.className = 'msg ai';
+    div.innerHTML = `<div class="msg-bubble">${formatText(text)}</div><div class="msg-time">WellCoach · ${time}</div>`;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function showTyping() {
+    const msgs = document.getElementById('messages');
+    const div = document.createElement('div');
+    div.className = 'msg ai'; div.id = 'typing';
+    div.innerHTML = `<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function removeTyping() {
+    const t = document.getElementById('typing');
+    if (t) t.remove();
+  }
+
+  function hideEmptyState() {
+    const es = document.getElementById('empty-state');
+    if (es) es.style.display = 'none';
+  }
+
+  // ─── SLIDERS & MOOD ───
+  function updateSlider(type) {
+    const val = parseFloat(document.getElementById(type + '-slider').value);
+    const display = document.getElementById(type + '-val');
+    if (type === 'sleep') display.textContent = val + 'h';
+    else if (type === 'water') display.textContent = val + ' glasses';
+    else if (type === 'exercise') display.textContent = val + ' min';
+    else if (type === 'stress') display.textContent = val + '/10';
+  }
+
+  function selectMood(btn, mood) {
+    document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedMood = mood;
+  }
+
+  // ─── UI UTILS ───
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  }
+
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+  }
+
+  function showToast(msg, error = false) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast' + (error ? ' error' : '');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  function escapeHtml(text) {
+    return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  }
+
+  function formatText(text) {
+    return text
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n/g,'<br>');
+  }
+</script>
+</body>
+</html>
