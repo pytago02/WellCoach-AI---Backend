@@ -1,392 +1,859 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>WellCoach AI – Personal Wellness Tracker</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>WellCoach AI – Personal Wellness Tracker</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-  html, body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-  }
+      html,
+      body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+      }
 
-  :root {
-    --teal: #1D9E75;
-    --teal-light: #E1F5EE;
-    --teal-mid: #5DCAA5;
-    --teal-dark: #085041;
-    --amber-light: #FAEEDA;
-    --coral: #D85A30;
-    --coral-light: #FAECE7;
-    --surface: #FAFAF8;
-    --card: #FFFFFF;
-    --border: #E8E6DF;
-    --text: #2C2C2A;
-    --text-muted: #888780;
-    --text-light: #B4B2A9;
-    --radius: 16px;
-    --radius-sm: 10px;
-    --header-h: 65px;
-    --tabbar-h: 60px;
-  }
+      :root {
+        --teal: #1d9e75;
+        --teal-light: #e1f5ee;
+        --teal-mid: #5dcaa5;
+        --teal-dark: #085041;
+        --amber-light: #faeeda;
+        --coral: #d85a30;
+        --coral-light: #faece7;
+        --surface: #fafaf8;
+        --card: #ffffff;
+        --border: #e8e6df;
+        --text: #2c2c2a;
+        --text-muted: #888780;
+        --text-light: #b4b2a9;
+        --radius: 16px;
+        --radius-sm: 10px;
+        --header-h: 65px;
+        --tabbar-h: 60px;
+      }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--surface);
-    color: var(--text);
-    min-height: 100vh;
-    min-height: 100dvh;
-  }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--surface);
+        color: var(--text);
+        min-height: 100vh;
+        min-height: 100dvh;
+      }
 
-  /* ══════════════════════════════
+      /* ══════════════════════════════
      AUTH SCREEN
   ══════════════════════════════ */
-  #auth-screen {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    min-height: 100dvh;
-    padding: 20px 16px;
-    background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 50%, var(--teal-mid) 100%);
-  }
+      #auth-screen {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        min-height: 100dvh;
+        padding: 20px 16px;
+        background: linear-gradient(
+          135deg,
+          var(--teal-dark) 0%,
+          var(--teal) 50%,
+          var(--teal-mid) 100%
+        );
+      }
 
-  .auth-box {
-    background: var(--card);
-    border-radius: 24px;
-    padding: 36px 32px 40px;
-    width: 100%;
-    max-width: 420px;
-    box-shadow: 0 24px 64px rgba(0,0,0,0.22);
-  }
+      .auth-box {
+        background: var(--card);
+        border-radius: 24px;
+        padding: 36px 32px 40px;
+        width: 100%;
+        max-width: 420px;
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
+      }
 
-  .auth-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
-  .auth-logo-icon {
-    width: 44px; height: 44px; flex-shrink: 0;
-    background: var(--teal); border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .auth-logo-icon svg { width: 24px; height: 24px; stroke: white; fill: none; stroke-width: 2; stroke-linecap: round; }
-  .auth-title { font-family: 'DM Serif Display', serif; font-size: 22px; font-weight: 400; }
-  .auth-sub { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+      .auth-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+      .auth-logo-icon {
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        background: var(--teal);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .auth-logo-icon svg {
+        width: 24px;
+        height: 24px;
+        stroke: white;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+      }
+      .auth-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 22px;
+        font-weight: 400;
+      }
+      .auth-sub {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
 
-  .auth-tabs { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 24px; }
-  .auth-tab {
-    flex: 1; padding: 10px; text-align: center; font-size: 14px; font-weight: 500;
-    cursor: pointer; color: var(--text-muted);
-    border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.15s;
-  }
-  .auth-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+      .auth-tabs {
+        display: flex;
+        border-bottom: 2px solid var(--border);
+        margin-bottom: 24px;
+      }
+      .auth-tab {
+        flex: 1;
+        padding: 10px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        color: var(--text-muted);
+        border-bottom: 2px solid transparent;
+        margin-bottom: -2px;
+        transition: all 0.15s;
+      }
+      .auth-tab.active {
+        color: var(--teal);
+        border-bottom-color: var(--teal);
+      }
 
-  .auth-field { margin-bottom: 14px; }
-  .auth-field label { display: block; font-size: 12px; font-weight: 500; color: var(--text-muted); margin-bottom: 6px; letter-spacing: 0.04em; }
-  .auth-field input {
-    width: 100%; padding: 12px 14px;
-    border: 1.5px solid var(--border); border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 16px; /* 16px stops iOS from zooming */
-    color: var(--text); background: var(--surface); outline: none; transition: border-color 0.15s;
-  }
-  .auth-field input:focus { border-color: var(--teal); background: var(--card); }
+      .auth-field {
+        margin-bottom: 14px;
+      }
+      .auth-field label {
+        display: block;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-muted);
+        margin-bottom: 6px;
+        letter-spacing: 0.04em;
+      }
+      .auth-field input {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius-sm);
+        font-family: "DM Sans", sans-serif;
+        font-size: 16px; /* 16px stops iOS from zooming */
+        color: var(--text);
+        background: var(--surface);
+        outline: none;
+        transition: border-color 0.15s;
+      }
+      .auth-field input:focus {
+        border-color: var(--teal);
+        background: var(--card);
+      }
 
-  .auth-btn {
-    width: 100%; padding: 14px; background: var(--teal); color: white; border: none;
-    border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif;
-    font-size: 15px; font-weight: 500; cursor: pointer; margin-top: 8px; transition: background 0.15s;
-  }
-  .auth-btn:hover { background: var(--teal-dark); }
-  .auth-btn:disabled { background: var(--teal-mid); cursor: not-allowed; }
+      .auth-btn {
+        width: 100%;
+        padding: 14px;
+        background: var(--teal);
+        color: white;
+        border: none;
+        border-radius: var(--radius-sm);
+        font-family: "DM Sans", sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        margin-top: 8px;
+        transition: background 0.15s;
+      }
+      .auth-btn:hover {
+        background: var(--teal-dark);
+      }
+      .auth-btn:disabled {
+        background: var(--teal-mid);
+        cursor: not-allowed;
+      }
 
-  .auth-error {
-    background: var(--coral-light); color: var(--coral);
-    padding: 10px 14px; border-radius: var(--radius-sm);
-    font-size: 13px; margin-bottom: 14px; display: none;
-  }
+      .auth-error {
+        background: var(--coral-light);
+        color: var(--coral);
+        padding: 10px 14px;
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+        margin-bottom: 14px;
+        display: none;
+      }
 
-  /* ══════════════════════════════
+      /* ══════════════════════════════
      APP – DESKTOP LAYOUT
   ══════════════════════════════ */
-  #app-screen {
-    display: none;
-    width: 100%;
-  }
+      #app-screen {
+        display: none;
+        width: 100%;
+      }
 
-  #app-screen.visible {
-    display: grid;
-    grid-template-columns: 320px 1fr;
-    grid-template-rows: var(--header-h) 1fr;
-    max-width: 1100px;
-    margin: 0 auto;
-    min-height: 100vh;
-  }
+      #app-screen.visible {
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        grid-template-rows: var(--header-h) 1fr;
+        max-width: 1100px;
+        margin: 0 auto;
+        min-height: 100vh;
+      }
 
-  header {
-    grid-column: 1 / -1;
-    height: var(--header-h);
-    padding: 0 28px;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-    background: var(--card);
-  }
+      header {
+        grid-column: 1 / -1;
+        height: var(--header-h);
+        padding: 0 28px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--card);
+      }
 
-  .logo { display: flex; align-items: center; gap: 12px; }
-  .logo-icon {
-    width: 40px; height: 40px; flex-shrink: 0;
-    background: var(--teal); border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .logo-icon svg { width: 22px; height: 22px; stroke: white; fill: none; stroke-width: 2; stroke-linecap: round; }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .logo-icon {
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;
+        background: var(--teal);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .logo-icon svg {
+        width: 22px;
+        height: 22px;
+        stroke: white;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+      }
 
-  h1 { font-family: 'DM Serif Display', serif; font-size: 20px; font-weight: 400; }
-  .tagline { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+      h1 {
+        font-family: "DM Serif Display", serif;
+        font-size: 20px;
+        font-weight: 400;
+      }
+      .tagline {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
 
-  .header-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+      }
 
-  .user-badge {
-    display: flex; align-items: center; gap: 7px;
-    padding: 6px 13px; background: var(--teal-light);
-    border-radius: 20px; font-size: 13px; color: var(--teal-dark); font-weight: 500;
-  }
-  .streak-badge {
-    padding: 6px 12px; background: var(--amber-light);
-    border-radius: 20px; font-size: 13px; color: #8B5E00; font-weight: 500;
-  }
-  .logout-btn {
-    padding: 6px 14px; background: var(--surface);
-    border: 1px solid var(--border); border-radius: 20px;
-    font-size: 13px; cursor: pointer; color: var(--text-muted); transition: all 0.15s;
-  }
-  .logout-btn:hover { border-color: var(--coral); color: var(--coral); }
+      .user-badge {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 6px 13px;
+        background: var(--teal-light);
+        border-radius: 20px;
+        font-size: 13px;
+        color: var(--teal-dark);
+        font-weight: 500;
+      }
+      .streak-badge {
+        padding: 6px 12px;
+        background: var(--amber-light);
+        border-radius: 20px;
+        font-size: 13px;
+        color: #8b5e00;
+        font-weight: 500;
+      }
+      .logout-btn {
+        padding: 6px 14px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        font-size: 13px;
+        cursor: pointer;
+        color: var(--text-muted);
+        transition: all 0.15s;
+      }
+      .logout-btn:hover {
+        border-color: var(--coral);
+        color: var(--coral);
+      }
 
-  /* Sidebar */
-  .sidebar {
-    border-right: 1px solid var(--border);
-    background: var(--card);
-    overflow-y: auto;
-    padding: 20px 18px;
-  }
+      /* Sidebar */
+      .sidebar {
+        border-right: 1px solid var(--border);
+        background: var(--card);
+        overflow-y: auto;
+        padding: 20px 18px;
+      }
 
-  .section-label {
-    font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--text-light); margin-bottom: 12px;
-  }
+      .section-label {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-light);
+        margin-bottom: 12px;
+      }
 
-  .checkin-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 16px; margin-bottom: 14px;
-  }
+      .checkin-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 16px;
+        margin-bottom: 14px;
+      }
 
-  .metric-row { margin-bottom: 16px; }
-  .metric-row:last-child { margin-bottom: 0; }
-  .metric-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
-  .metric-label { font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 6px; }
-  .metric-emoji { font-size: 14px; }
-  .metric-value { font-size: 13px; font-weight: 500; color: var(--teal); min-width: 60px; text-align: right; }
+      .metric-row {
+        margin-bottom: 16px;
+      }
+      .metric-row:last-child {
+        margin-bottom: 0;
+      }
+      .metric-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 7px;
+      }
+      .metric-label {
+        font-size: 13px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .metric-emoji {
+        font-size: 14px;
+      }
+      .metric-value {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--teal);
+        min-width: 60px;
+        text-align: right;
+      }
 
-  input[type="range"] {
-    -webkit-appearance: none; width: 100%; height: 4px;
-    background: var(--border); border-radius: 2px; outline: none; cursor: pointer;
-  }
-  input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none; width: 20px; height: 20px;
-    background: var(--teal); border-radius: 50%; cursor: pointer;
-    border: 2px solid white; box-shadow: 0 1px 4px rgba(0,0,0,0.15);
-  }
+      input[type="range"] {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 4px;
+        background: var(--border);
+        border-radius: 2px;
+        outline: none;
+        cursor: pointer;
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 20px;
+        height: 20px;
+        background: var(--teal);
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid white;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+      }
 
-  .mood-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-top: 4px; }
-  .mood-btn {
-    padding: 8px 4px; border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm); background: var(--card);
-    cursor: pointer; font-size: 18px; text-align: center; transition: all 0.15s;
-  }
-  .mood-btn:hover { border-color: var(--teal-mid); background: var(--teal-light); }
-  .mood-btn.selected { border-color: var(--teal); background: var(--teal-light); }
+      .mood-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 5px;
+        margin-top: 4px;
+      }
+      .mood-btn {
+        padding: 8px 4px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: var(--card);
+        cursor: pointer;
+        font-size: 18px;
+        text-align: center;
+        transition: all 0.15s;
+      }
+      .mood-btn:hover {
+        border-color: var(--teal-mid);
+        background: var(--teal-light);
+      }
+      .mood-btn.selected {
+        border-color: var(--teal);
+        background: var(--teal-light);
+      }
 
-  .notes-field {
-    width: 100%; padding: 9px 12px;
-    border: 1.5px solid var(--border); border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif; font-size: 14px;
-    resize: none; height: 58px; outline: none;
-    color: var(--text); background: var(--card); margin-top: 12px; transition: border-color 0.15s;
-  }
-  .notes-field:focus { border-color: var(--teal); }
-  .notes-field::placeholder { color: var(--text-light); }
+      .notes-field {
+        width: 100%;
+        padding: 9px 12px;
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius-sm);
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        resize: none;
+        height: 58px;
+        outline: none;
+        color: var(--text);
+        background: var(--card);
+        margin-top: 12px;
+        transition: border-color 0.15s;
+      }
+      .notes-field:focus {
+        border-color: var(--teal);
+      }
+      .notes-field::placeholder {
+        color: var(--text-light);
+      }
 
-  .submit-btn {
-    width: 100%; padding: 13px; background: var(--teal); color: white;
-    border: none; border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
-    cursor: pointer; margin-top: 14px; transition: background 0.15s, transform 0.1s;
-  }
-  .submit-btn:hover { background: var(--teal-dark); }
-  .submit-btn:active { transform: scale(0.98); }
-  .submit-btn:disabled { background: var(--teal-mid); cursor: not-allowed; }
+      .submit-btn {
+        width: 100%;
+        padding: 13px;
+        background: var(--teal);
+        color: white;
+        border: none;
+        border-radius: var(--radius-sm);
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        margin-top: 14px;
+        transition:
+          background 0.15s,
+          transform 0.1s;
+      }
+      .submit-btn:hover {
+        background: var(--teal-dark);
+      }
+      .submit-btn:active {
+        transform: scale(0.98);
+      }
+      .submit-btn:disabled {
+        background: var(--teal-mid);
+        cursor: not-allowed;
+      }
 
-  .stats-card {
-    background: linear-gradient(135deg, var(--teal-light), #fff);
-    border: 1px solid var(--teal-mid); border-radius: var(--radius);
-    padding: 14px 16px; margin-bottom: 14px;
-  }
-  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-  .stat-item { text-align: center; }
-  .stat-num { font-size: 17px; font-weight: 500; color: var(--teal-dark); font-family: 'DM Serif Display', serif; }
-  .stat-lbl { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+      .stats-card {
+        background: linear-gradient(135deg, var(--teal-light), #fff);
+        border: 1px solid var(--teal-mid);
+        border-radius: var(--radius);
+        padding: 14px 16px;
+        margin-bottom: 14px;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+      }
+      .stat-item {
+        text-align: center;
+      }
+      .stat-num {
+        font-size: 17px;
+        font-weight: 500;
+        color: var(--teal-dark);
+        font-family: "DM Serif Display", serif;
+      }
+      .stat-lbl {
+        font-size: 10px;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
 
-  .history-section { margin-top: 16px; }
-  .history-item {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 9px 12px; background: var(--surface);
-    border: 1px solid var(--border); border-radius: var(--radius-sm);
-    margin-bottom: 7px; font-size: 13px; cursor: pointer; transition: border-color 0.15s;
-  }
-  .history-item:hover { border-color: var(--teal-mid); }
-  .history-date { color: var(--text-muted); font-size: 12px; }
-  .history-dots { display: flex; gap: 5px; }
-  .hdot { width: 8px; height: 8px; border-radius: 50%; }
+      .history-section {
+        margin-top: 16px;
+      }
+      .history-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 9px 12px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        margin-bottom: 7px;
+        font-size: 13px;
+        cursor: pointer;
+        transition: border-color 0.15s;
+      }
+      .history-item:hover {
+        border-color: var(--teal-mid);
+      }
+      .history-date {
+        color: var(--text-muted);
+        font-size: 12px;
+      }
+      .history-dots {
+        display: flex;
+        gap: 5px;
+      }
+      .hdot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+      }
 
-  /* Chat panel */
-  .chat-panel {
-    display: flex; flex-direction: column;
-    height: calc(100vh - var(--header-h));
-    min-height: 0;
-  }
+      /* Chat panel */
+      .chat-panel {
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - var(--header-h));
+        min-height: 0;
+      }
 
-  .chat-header {
-    padding: 12px 20px; border-bottom: 1px solid var(--border);
-    background: var(--card); display: flex; align-items: center;
-    justify-content: space-between; flex-shrink: 0;
-  }
+      .chat-header {
+        padding: 12px 20px;
+        border-bottom: 1px solid var(--border);
+        background: var(--card);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+      }
 
-  .coach-info { display: flex; align-items: center; gap: 10px; }
-  .coach-avatar {
-    width: 36px; height: 36px;
-    background: linear-gradient(135deg, var(--teal-light), var(--teal-mid));
-    border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px;
-  }
-  .coach-name { font-size: 14px; font-weight: 500; }
-  .coach-status { font-size: 12px; color: var(--teal); }
+      .coach-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .coach-avatar {
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(135deg, var(--teal-light), var(--teal-mid));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+      }
+      .coach-name {
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .coach-status {
+        font-size: 12px;
+        color: var(--teal);
+      }
 
-  .api-key-section { display: flex; align-items: center; gap: 7px; }
-  .api-input {
-    width: 190px; padding: 7px 11px;
-    border: 1px solid var(--border); border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif; font-size: 12px;
-    color: var(--text-muted); background: var(--surface); outline: none; transition: border-color 0.15s;
-  }
-  .api-input:focus { border-color: var(--teal); }
+      .api-key-section {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .api-input {
+        width: 190px;
+        padding: 7px 11px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        font-family: "DM Sans", sans-serif;
+        font-size: 12px;
+        color: var(--text-muted);
+        background: var(--surface);
+        outline: none;
+        transition: border-color 0.15s;
+      }
+      .api-input:focus {
+        border-color: var(--teal);
+      }
 
-  .save-key-btn {
-    padding: 7px 13px; background: var(--surface);
-    border: 1px solid var(--border); border-radius: var(--radius-sm);
-    font-size: 12px; font-weight: 500; cursor: pointer; color: var(--text);
-    transition: all 0.15s; white-space: nowrap;
-  }
-  .save-key-btn:hover { background: var(--teal-light); border-color: var(--teal); color: var(--teal-dark); }
+      .save-key-btn {
+        padding: 7px 13px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        color: var(--text);
+        transition: all 0.15s;
+        white-space: nowrap;
+      }
+      .save-key-btn:hover {
+        background: var(--teal-light);
+        border-color: var(--teal);
+        color: var(--teal-dark);
+      }
 
-  .clear-chat-btn {
-    padding: 7px 11px; background: var(--surface);
-    border: 1px solid var(--border); border-radius: var(--radius-sm);
-    font-size: 13px; cursor: pointer; color: var(--text-muted); transition: all 0.15s;
-  }
-  .clear-chat-btn:hover { border-color: var(--coral); color: var(--coral); }
+      .clear-chat-btn {
+        padding: 7px 11px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+        cursor: pointer;
+        color: var(--text-muted);
+        transition: all 0.15s;
+      }
+      .clear-chat-btn:hover {
+        border-color: var(--coral);
+        color: var(--coral);
+      }
 
-  .today-bar {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 7px; padding: 9px 20px;
-    border-bottom: 1px solid var(--border); background: var(--card); flex-shrink: 0;
-  }
-  .stat-pill {
-    display: flex; align-items: center; gap: 6px;
-    padding: 6px 10px; background: var(--surface);
-    border: 1px solid var(--border); border-radius: 20px;
-    font-size: 11px; white-space: nowrap; overflow: hidden;
-  }
-  .stat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-  .no-log-msg {
-    font-size: 12px; color: var(--text-light); text-align: center;
-    padding: 6px; grid-column: 1 / -1; font-style: italic;
-  }
+      .today-bar {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 7px;
+        padding: 9px 20px;
+        border-bottom: 1px solid var(--border);
+        background: var(--card);
+        flex-shrink: 0;
+      }
+      .stat-pill {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        font-size: 11px;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .stat-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .no-log-msg {
+        font-size: 12px;
+        color: var(--text-light);
+        text-align: center;
+        padding: 6px;
+        grid-column: 1 / -1;
+        font-style: italic;
+      }
 
-  .messages {
-    flex: 1; overflow-y: auto; padding: 20px;
-    display: flex; flex-direction: column; gap: 14px;
-    background: var(--surface);
-  }
+      .messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        background: var(--surface);
+      }
 
-  .msg { max-width: 75%; animation: fadeUp 0.2s ease; }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-  .msg.user { align-self: flex-end; }
-  .msg.ai { align-self: flex-start; }
+      .msg {
+        max-width: 75%;
+        animation: fadeUp 0.2s ease;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .msg.user {
+        align-self: flex-end;
+      }
+      .msg.ai {
+        align-self: flex-start;
+      }
 
-  .msg-bubble { padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.6; }
-  .msg.user .msg-bubble { background: var(--teal); color: white; border-bottom-right-radius: 5px; }
-  .msg.ai .msg-bubble { background: var(--card); border: 1px solid var(--border); color: var(--text); border-bottom-left-radius: 5px; }
-  .msg-time { font-size: 11px; color: var(--text-light); margin-top: 4px; padding: 0 4px; }
-  .msg.user .msg-time { text-align: right; }
+      .msg-bubble {
+        padding: 12px 16px;
+        border-radius: 18px;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      .msg.user .msg-bubble {
+        background: var(--teal);
+        color: white;
+        border-bottom-right-radius: 5px;
+      }
+      .msg.ai .msg-bubble {
+        background: var(--card);
+        border: 1px solid var(--border);
+        color: var(--text);
+        border-bottom-left-radius: 5px;
+      }
+      .msg-time {
+        font-size: 11px;
+        color: var(--text-light);
+        margin-top: 4px;
+        padding: 0 4px;
+      }
+      .msg.user .msg-time {
+        text-align: right;
+      }
 
-  .typing-indicator {
-    display: flex; gap: 5px; padding: 13px 17px;
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 18px; border-bottom-left-radius: 5px; width: fit-content;
-  }
-  .typing-dot {
-    width: 7px; height: 7px; background: var(--text-light);
-    border-radius: 50%; animation: bounce 1.3s infinite;
-  }
-  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+      .typing-indicator {
+        display: flex;
+        gap: 5px;
+        padding: 13px 17px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        border-bottom-left-radius: 5px;
+        width: fit-content;
+      }
+      .typing-dot {
+        width: 7px;
+        height: 7px;
+        background: var(--text-light);
+        border-radius: 50%;
+        animation: bounce 1.3s infinite;
+      }
+      .typing-dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .typing-dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      @keyframes bounce {
+        0%,
+        60%,
+        100% {
+          transform: translateY(0);
+        }
+        30% {
+          transform: translateY(-6px);
+        }
+      }
 
-  .quick-prompts {
-    display: flex; flex-wrap: wrap; gap: 6px;
-    padding: 10px 20px; border-top: 1px solid var(--border);
-    background: var(--card); flex-shrink: 0;
-  }
-  .qp-btn {
-    padding: 5px 12px; border: 1px solid var(--border); border-radius: 20px;
-    font-size: 12px; cursor: pointer; background: var(--surface); color: var(--text);
-    transition: all 0.15s; white-space: nowrap;
-  }
-  .qp-btn:hover { background: var(--teal-light); border-color: var(--teal); color: var(--teal-dark); }
+      .quick-prompts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 10px 20px;
+        border-top: 1px solid var(--border);
+        background: var(--card);
+        flex-shrink: 0;
+      }
+      .qp-btn {
+        padding: 5px 12px;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        font-size: 12px;
+        cursor: pointer;
+        background: var(--surface);
+        color: var(--text);
+        transition: all 0.15s;
+        white-space: nowrap;
+      }
+      .qp-btn:hover {
+        background: var(--teal-light);
+        border-color: var(--teal);
+        color: var(--teal-dark);
+      }
 
-  .chat-input-area {
-    padding: 12px 20px 16px; border-top: 1px solid var(--border);
-    background: var(--card); display: flex; gap: 9px; align-items: flex-end; flex-shrink: 0;
-  }
-  .chat-textarea {
-    flex: 1; padding: 11px 15px; border: 1px solid var(--border);
-    border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif;
-    font-size: 14px; resize: none; outline: none;
-    min-height: 44px; max-height: 120px; overflow-y: auto;
-    background: var(--surface); color: var(--text); transition: border-color 0.15s; line-height: 1.5;
-  }
-  .chat-textarea:focus { border-color: var(--teal); background: var(--card); }
-  .chat-textarea::placeholder { color: var(--text-light); }
+      .chat-input-area {
+        padding: 12px 20px 16px;
+        border-top: 1px solid var(--border);
+        background: var(--card);
+        display: flex;
+        gap: 9px;
+        align-items: flex-end;
+        flex-shrink: 0;
+      }
+      .chat-textarea {
+        flex: 1;
+        padding: 11px 15px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        resize: none;
+        outline: none;
+        min-height: 44px;
+        max-height: 120px;
+        overflow-y: auto;
+        background: var(--surface);
+        color: var(--text);
+        transition: border-color 0.15s;
+        line-height: 1.5;
+      }
+      .chat-textarea:focus {
+        border-color: var(--teal);
+        background: var(--card);
+      }
+      .chat-textarea::placeholder {
+        color: var(--text-light);
+      }
 
-  .send-btn {
-    width: 44px; height: 44px; background: var(--teal); border: none;
-    border-radius: var(--radius-sm); cursor: pointer; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.15s, transform 0.1s;
-  }
-  .send-btn:hover { background: var(--teal-dark); }
-  .send-btn:active { transform: scale(0.95); }
-  .send-btn svg { width: 18px; height: 18px; stroke: white; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .send-btn {
+        width: 44px;
+        height: 44px;
+        background: var(--teal);
+        border: none;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          background 0.15s,
+          transform 0.1s;
+      }
+      .send-btn:hover {
+        background: var(--teal-dark);
+      }
+      .send-btn:active {
+        transform: scale(0.95);
+      }
+      .send-btn svg {
+        width: 18px;
+        height: 18px;
+        stroke: white;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
 
-  .empty-state {
-    display: flex; flex-direction: column; align-items: center;
-    justify-content: center; flex: 1; gap: 10px;
-    color: var(--text-muted); text-align: center; padding: 32px 20px;
-  }
-  .empty-icon { font-size: 38px; margin-bottom: 4px; }
-  .empty-title { font-size: 16px; font-weight: 500; color: var(--text); }
-  .empty-sub { font-size: 13px; line-height: 1.6; max-width: 280px; }
+      .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        gap: 10px;
+        color: var(--text-muted);
+        text-align: center;
+        padding: 32px 20px;
+      }
+      .empty-icon {
+        font-size: 38px;
+        margin-bottom: 4px;
+      }
+      .empty-title {
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--text);
+      }
+      .empty-sub {
+        font-size: 13px;
+        line-height: 1.6;
+        max-width: 280px;
+      }
 
-  .toast {
+      /* .toast {
     position: fixed; bottom: 24px; left: 50%;
     transform: translateX(-50%) translateY(70px);
     background: var(--teal-dark); color: white;
@@ -396,839 +863,1360 @@
     white-space: nowrap;
   }
   .toast.error { background: var(--coral); }
-  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.show { transform: translateX(-50%) translateY(0); } */
+      .toast {
+        position: fixed;
+        top: 24px;
+        right: 24px;
+        background: var(--teal-dark);
+        color: white;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease;
+        transform: translateY(-20px);
+        z-index: 999;
+        white-space: nowrap;
+      }
 
-  /* Hidden mobile-only elements by default */
-  .mobile-tabbar { display: none; }
-  .drawer-backdrop { display: none; }
-  .mobile-name { display: none; }
+      .toast.error {
+        background: var(--coral);
+      }
 
-  /* ══════════════════════════════
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0); /* trở về vị trí ban đầu */
+      }
+
+      /* Hidden mobile-only elements by default */
+      .mobile-tabbar {
+        display: none;
+      }
+      .drawer-backdrop {
+        display: none;
+      }
+      .mobile-name {
+        display: none;
+      }
+
+      /* ══════════════════════════════
      TABLET  768 – 1024px
   ══════════════════════════════ */
-  @media (max-width: 1024px) {
-    #app-screen.visible { grid-template-columns: 260px 1fr; }
-    header { padding: 0 18px; }
-    h1 { font-size: 18px; }
-    .tagline { display: none; }
-    .streak-badge { display: none !important; }
-    .api-input { width: 140px; }
-    .today-bar { grid-template-columns: repeat(2, 1fr); padding: 8px 14px; }
-    .messages { padding: 14px; }
-    .chat-input-area { padding: 10px 14px 14px; }
-    .quick-prompts { padding: 8px 14px; }
-    .msg { max-width: 85%; }
-  }
-
-  /* ══════════════════════════════
-     MOBILE  ≤ 767px
-  ══════════════════════════════ */
-  @media (max-width: 767px) {
-
-    /* Auth: centred card, no slide-up */
-    #auth-screen {
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      min-height: 100svh;
-    }
-    .auth-box {
-      width: 100%;
-      max-width: 100%;
-      padding: 28px 20px 36px;
-      border-radius: 20px;
-      box-shadow: 0 16px 50px rgba(0,0,0,0.25);
-    }
-    .auth-title { font-size: 20px; }
-    .auth-sub { font-size: 12px; }
-
-    /* App: flex column, fills viewport */
-    #app-screen.visible {
-      display: flex;
-      flex-direction: column;
-      width: 100vw;
-      max-width: 100vw;
-      min-height: 100dvh;
-      margin: 0;
-    }
-
-    /* Header slim */
-    header {
-      width: 100%;
-      height: 52px;
-      min-height: 52px;
-      max-height: 52px;
-      padding: 0 12px;
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      flex-shrink: 0;
-    }
-    --header-h: 52px; /* override for mobile calc */
-    .logo-icon { width: 30px; height: 30px; border-radius: 8px; }
-    .logo-icon svg { width: 15px; height: 15px; }
-    h1 { font-size: 15px; }
-    .tagline { display: none; }
-    .streak-badge { display: none !important; }
-    .user-badge { display: none !important; }
-    .logout-btn { display: none !important; }
-
-    /* Mobile name pill visible */
-    .mobile-name {
-      display: block;
-      font-size: 12px; font-weight: 500;
-      color: var(--teal-dark); background: var(--teal-light);
-      padding: 4px 10px; border-radius: 14px;
-      max-width: 90px; overflow: hidden;
-      text-overflow: ellipsis; white-space: nowrap;
-    }
-
-    /* Sidebar = bottom drawer, full width */
-    .sidebar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      top: auto;
-      width: 100%;
-      max-width: 100%;
-      height: 90svh;
-      max-height: 90svh;
-      border-right: none;
-      border-radius: 20px 20px 0 0;
-      border-top: 1px solid var(--border);
-      z-index: 60;
-      transform: translateY(100%);
-      transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
-      box-shadow: 0 -12px 50px rgba(0,0,0,0.15);
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      padding: 0 16px calc(var(--tabbar-h) + 16px);
-    }
-    .sidebar.open { transform: translateY(0); }
-
-    /* Drawer handle pill */
-    .sidebar::before {
-      content: '';
-      display: block;
-      width: 40px; height: 4px;
-      background: var(--border); border-radius: 2px;
-      margin: 12px auto 16px;
-    }
-
-    /* Backdrop */
-    .drawer-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 55;
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
-    }
-    .drawer-backdrop.open { display: block; }
-
-    /* Chat panel */
-    .chat-panel {
-      flex: 1;
-      width: 100%;
-      min-height: 0;
-      /* 52px header + 60px tabbar */
-      height: calc(100dvh - 52px - 60px);
-    }
-
-    /* Chat header stacked */
-    .chat-header {
-      padding: 10px 12px;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 7px;
-    }
-    .api-key-section {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-      gap: 6px;
-      width: 100%;
-    }
-    .api-input {
-      width: 100%;
-      font-size: 14px;
-      padding: 8px 11px;
-    }
-    .save-key-btn { padding: 8px 11px; font-size: 12px; }
-    .clear-chat-btn { padding: 8px 10px; font-size: 13px; }
-
-    /* Today bar 2-col */
-    .today-bar {
-      grid-template-columns: 1fr 1fr;
-      padding: 7px 12px;
-      gap: 5px;
-    }
-    .stat-pill { font-size: 11px; padding: 5px 8px; }
-
-    /* Messages */
-    .messages { padding: 10px 12px; gap: 10px; }
-    .msg { max-width: 88%; }
-    .msg-bubble { font-size: 13px; padding: 10px 13px; }
-
-    /* Quick prompts: scroll horizontal */
-    .quick-prompts {
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      padding: 8px 12px;
-      gap: 6px;
-      scrollbar-width: none;
-    }
-    .quick-prompts::-webkit-scrollbar { display: none; }
-    .qp-btn { flex-shrink: 0; font-size: 11px; padding: 5px 10px; }
-
-    /* Chat input */
-    .chat-input-area { padding: 8px 12px 10px; gap: 8px; }
-    .chat-textarea { font-size: 16px; /* stops iOS zoom */ min-height: 42px; }
-    .send-btn { width: 42px; height: 42px; }
-
-    /* Stats 2×2 */
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .stat-num { font-size: 16px; }
-
-    /* History compact */
-    .history-item { padding: 8px 12px; }
-
-    /* Toast above tabbar */
-    .toast { bottom: calc(var(--tabbar-h) + 10px); }
-
-    /* Bottom tab bar */
-    .mobile-tabbar {
-      display: flex;
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      height: var(--tabbar-h);
-      background: var(--card);
-      border-top: 1px solid var(--border);
-      z-index: 50;
-      box-shadow: 0 -2px 16px rgba(0,0,0,0.08);
-      padding-bottom: env(safe-area-inset-bottom, 0);
-    }
-
-    .tab-item {
-      flex: 1;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 2px; cursor: pointer;
-      color: var(--text-light);
-      font-size: 10px; font-weight: 500;
-      transition: color 0.15s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .tab-item.active { color: var(--teal); }
-    .tab-icon { font-size: 20px; line-height: 1; }
-  }
-
-  /* ══════════════════════════════
-     VERY SMALL  ≤ 380px
-  ══════════════════════════════ */
-  @media (max-width: 380px) {
-    .auth-box { padding: 22px 16px 32px; }
-    .auth-title { font-size: 18px; }
-    .msg { max-width: 94%; }
-    .api-key-section { grid-template-columns: 1fr auto; }
-    .save-key-btn { display: none; }
-  }
-</style>
-</head>
-<body>
-
-<!-- ── AUTH SCREEN ── -->
-<div id="auth-screen">
-  <div class="auth-box">
-    <div class="auth-logo">
-      <div class="auth-logo-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-      </div>
-      <div>
-        <div class="auth-title">WellCoach AI</div>
-        <div class="auth-sub">Your personal wellness companion</div>
-      </div>
-    </div>
-
-    <div class="auth-tabs">
-      <div class="auth-tab active" id="tab-login" onclick="switchTab('login')">Sign In</div>
-      <div class="auth-tab" id="tab-register" onclick="switchTab('register')">Create Account</div>
-    </div>
-
-    <div class="auth-error" id="auth-error"></div>
-
-    <div id="form-login">
-      <div class="auth-field">
-        <label>EMAIL</label>
-        <input type="email" id="login-email" placeholder="you@example.com" autocomplete="email">
-      </div>
-      <div class="auth-field">
-        <label>PASSWORD</label>
-        <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"
-          onkeydown="if(event.key==='Enter') doLogin()">
-      </div>
-      <button class="auth-btn" id="login-btn" onclick="doLogin()">Sign In</button>
-    </div>
-
-    <div id="form-register" style="display:none">
-      <div class="auth-field">
-        <label>FULL NAME</label>
-        <input type="text" id="reg-name" placeholder="Your name" autocomplete="name">
-      </div>
-      <div class="auth-field">
-        <label>EMAIL</label>
-        <input type="email" id="reg-email" placeholder="you@example.com" autocomplete="email">
-      </div>
-      <div class="auth-field">
-        <label>PASSWORD (min. 6 characters)</label>
-        <input type="password" id="reg-password" placeholder="••••••••" autocomplete="new-password"
-          onkeydown="if(event.key==='Enter') doRegister()">
-      </div>
-      <button class="auth-btn" id="register-btn" onclick="doRegister()">Create Account</button>
-    </div>
-  </div>
-</div>
-
-<!-- ── APP SCREEN ── -->
-<div id="app-screen">
-
-  <header>
-    <div class="logo">
-      <div class="logo-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-      </div>
-      <div>
-        <h1>WellCoach AI</h1>
-        <div class="tagline">Your personal wellness companion</div>
-      </div>
-    </div>
-    <div class="header-right" id="header-right">
-      <div class="streak-badge" id="streak-badge" style="display:none">🔥 0-day streak</div>
-      <div class="user-badge">👤 <span id="user-name-display">—</span></div>
-      <button class="logout-btn" onclick="doLogout()">Sign out</button>
-    </div>
-  </header>
-
-  <aside class="sidebar">
-    <div class="section-label">Today's Check-in</div>
-    <div class="checkin-card">
-      <div class="metric-row">
-        <div class="metric-header">
-          <div class="metric-label"><span class="metric-emoji">😴</span> Sleep</div>
-          <div class="metric-value" id="sleep-val">7h</div>
-        </div>
-        <input type="range" min="3" max="12" step="0.5" value="7" id="sleep-slider" oninput="updateSlider('sleep')">
-      </div>
-      <div class="metric-row">
-        <div class="metric-header">
-          <div class="metric-label"><span class="metric-emoji">💧</span> Water</div>
-          <div class="metric-value" id="water-val">6 glasses</div>
-        </div>
-        <input type="range" min="0" max="12" step="1" value="6" id="water-slider" oninput="updateSlider('water')">
-      </div>
-      <div class="metric-row">
-        <div class="metric-header">
-          <div class="metric-label"><span class="metric-emoji">🏃</span> Exercise</div>
-          <div class="metric-value" id="exercise-val">30 min</div>
-        </div>
-        <input type="range" min="0" max="120" step="5" value="30" id="exercise-slider" oninput="updateSlider('exercise')">
-      </div>
-      <div class="metric-row">
-        <div class="metric-header">
-          <div class="metric-label"><span class="metric-emoji">🌡️</span> Stress</div>
-          <div class="metric-value" id="stress-val">5/10</div>
-        </div>
-        <input type="range" min="1" max="10" step="1" value="5" id="stress-slider" oninput="updateSlider('stress')">
-      </div>
-      <div class="metric-row">
-        <div class="metric-label" style="margin-bottom:10px"><span class="metric-emoji">😊</span> Mood</div>
-        <div class="mood-grid">
-          <button class="mood-btn" onclick="selectMood(this,'😞')">😞</button>
-          <button class="mood-btn" onclick="selectMood(this,'😕')">😕</button>
-          <button class="mood-btn selected" onclick="selectMood(this,'😐')">😐</button>
-          <button class="mood-btn" onclick="selectMood(this,'🙂')">🙂</button>
-          <button class="mood-btn" onclick="selectMood(this,'😄')">😄</button>
-        </div>
-      </div>
-      <textarea class="notes-field" id="notes-field" placeholder="Optional notes…" rows="2"></textarea>
-      <button class="submit-btn" id="log-btn" onclick="logDay()">✓ Log Today</button>
-    </div>
-
-    <div class="stats-card" id="stats-card" style="display:none">
-      <div class="section-label" style="margin-bottom:10px">7-Day Averages</div>
-      <div class="stats-grid">
-        <div class="stat-item"><div class="stat-num" id="stat-sleep">—</div><div class="stat-lbl">Sleep</div></div>
-        <div class="stat-item"><div class="stat-num" id="stat-water">—</div><div class="stat-lbl">Water</div></div>
-        <div class="stat-item"><div class="stat-num" id="stat-exercise">—</div><div class="stat-lbl">Exercise</div></div>
-        <div class="stat-item"><div class="stat-num" id="stat-stress">—</div><div class="stat-lbl">Stress</div></div>
-      </div>
-    </div>
-
-    <div class="history-section">
-      <div class="section-label">Recent Logs</div>
-      <div id="history-list">
-        <div style="font-size:12px;color:var(--text-light);text-align:center;padding:12px;font-style:italic">Loading…</div>
-      </div>
-    </div>
-  </aside>
-
-  <div class="chat-panel">
-    <div class="chat-header">
-      <div class="coach-info">
-        <div class="coach-avatar">🌿</div>
-        <div>
-          <div class="coach-name">Wellness Coach</div>
-          <div class="coach-status" id="coach-status">● Ready</div>
-        </div>
-      </div>
-      <div class="api-key-section">
-        <input type="password" class="api-input" id="api-key-input" placeholder="Paste Anthropic API key…">
-        <button class="save-key-btn" onclick="saveKey()">Connect</button>
-        <button class="clear-chat-btn" onclick="clearChat()">🗑</button>
-      </div>
-    </div>
-
-    <div class="today-bar" id="today-bar">
-      <div class="no-log-msg">Log your day to see today's stats here</div>
-    </div>
-
-    <div class="messages" id="messages">
-      <div class="empty-state" id="empty-state">
-        <div class="empty-icon">🌱</div>
-        <div class="empty-title">Welcome to WellCoach AI</div>
-        <div class="empty-sub">Log today's check-in, then chat with your AI coach about your wellness.</div>
-      </div>
-    </div>
-
-    <div class="quick-prompts">
-      <button class="qp-btn" onclick="sendQuick('How am I doing this week?')">📊 Weekly summary</button>
-      <button class="qp-btn" onclick="sendQuick('What can I do to sleep better?')">😴 Sleep tips</button>
-      <button class="qp-btn" onclick="sendQuick('I\'m feeling stressed. What should I do?')">🌡️ Stress help</button>
-      <button class="qp-btn" onclick="sendQuick('Give me a wellness tip for today')">💡 Daily tip</button>
-      <button class="qp-btn" onclick="sendQuick('What patterns do you see in my recent logs?')">🔍 My patterns</button>
-    </div>
-
-    <div class="chat-input-area">
-      <textarea class="chat-textarea" id="chat-input"
-        placeholder="Ask your wellness coach anything…" rows="1"
-        onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
-      <button class="send-btn" onclick="sendMessage()">
-        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-      </button>
-    </div>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
-<div class="drawer-backdrop" id="drawer-backdrop" onclick="closeSidebar()"></div>
-
-<!-- Mobile tab bar – hidden until login -->
-<div class="mobile-tabbar" id="mobile-tabbar" style="display:none">
-  <div class="tab-item active" id="tab-chat" onclick="mobileTab('chat')">
-    <div class="tab-icon">💬</div><span>Chat</span>
-  </div>
-  <div class="tab-item" id="tab-checkin" onclick="mobileTab('checkin')">
-    <div class="tab-icon">📋</div><span>Check-in</span>
-  </div>
-  <div class="tab-item" id="tab-history" onclick="mobileTab('history')">
-    <div class="tab-icon">📈</div><span>History</span>
-  </div>
-  <div class="tab-item" id="tab-me" onclick="mobileTab('me')">
-    <div class="tab-icon">👤</div><span>Me</span>
-  </div>
-</div>
-
-<script>
-  const API_BASE = window.location.origin + '/api';
-  let token = localStorage.getItem('wc_token') || null;
-  let currentUser = null;
-  let selectedMood = '😐';
-  let apiKey = '';
-
-  window.onload = async () => { if (token) await loadApp(); };
-
-  // ── AUTH ──
-  function switchTab(tab) {
-    document.getElementById('tab-login').classList.toggle('active', tab === 'login');
-    document.getElementById('tab-register').classList.toggle('active', tab === 'register');
-    document.getElementById('form-login').style.display = tab === 'login' ? 'block' : 'none';
-    document.getElementById('form-register').style.display = tab === 'register' ? 'block' : 'none';
-    document.getElementById('auth-error').style.display = 'none';
-  }
-
-  function setAuthError(msg) {
-    const el = document.getElementById('auth-error');
-    el.textContent = msg; el.style.display = msg ? 'block' : 'none';
-  }
-
-  async function doLogin() {
-    const email = document.getElementById('login-email').value.trim();
-    const password = document.getElementById('login-password').value;
-    if (!email || !password) return setAuthError('Please enter email and password');
-    const btn = document.getElementById('login-btn');
-    btn.disabled = true; btn.textContent = 'Signing in…'; setAuthError('');
-    try {
-      const res = await fetch(`${API_BASE}/auth/login`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Login failed');
-      token = data.token; localStorage.setItem('wc_token', token);
-      await loadApp();
-    } catch (e) { setAuthError(e.message); }
-    finally { btn.disabled = false; btn.textContent = 'Sign In'; }
-  }
-
-  async function doRegister() {
-    const name = document.getElementById('reg-name').value.trim();
-    const email = document.getElementById('reg-email').value.trim();
-    const password = document.getElementById('reg-password').value;
-    if (!name || !email || !password) return setAuthError('Please fill all fields');
-    const btn = document.getElementById('register-btn');
-    btn.disabled = true; btn.textContent = 'Creating account…'; setAuthError('');
-    try {
-      const res = await fetch(`${API_BASE}/auth/register`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Registration failed');
-      token = data.token; localStorage.setItem('wc_token', token);
-      await loadApp();
-    } catch (e) { setAuthError(e.message); }
-    finally { btn.disabled = false; btn.textContent = 'Create Account'; }
-  }
-
-  function doLogout() {
-    localStorage.removeItem('wc_token');
-    token = null; currentUser = null; apiKey = '';
-    document.getElementById('auth-screen').style.display = 'flex';
-    document.getElementById('app-screen').classList.remove('visible');
-    document.getElementById('messages').innerHTML = '<div class="empty-state" id="empty-state"><div class="empty-icon">🌱</div><div class="empty-title">Welcome to WellCoach AI</div><div class="empty-sub">Log today\'s check-in, then chat with your AI coach.</div></div>';
-    document.getElementById('mobile-tabbar').style.display = 'none';
-    closeSidebar();
-    const b = document.getElementById('mobile-name-badge'); if (b) b.remove();
-    const mp = document.getElementById('me-panel'); if (mp) mp.remove();
-  }
-
-  // ── APP LOAD ──
-  async function loadApp() {
-    try {
-      const res = await authFetch('/auth/me');
-      if (!res.ok) { doLogout(); return; }
-      currentUser = await res.json();
-
-      document.getElementById('auth-screen').style.display = 'none';
-      document.getElementById('app-screen').classList.add('visible');
-      document.getElementById('user-name-display').textContent = currentUser.name;
-
-      if (currentUser.hasApiKey) {
-        const keyRes = await authFetch('/auth/apikey');
-        if (keyRes.ok) {
-          const { apiKey: sk } = await keyRes.json();
-          if (sk) {
-            apiKey = sk;
-            document.getElementById('api-key-input').value = '•'.repeat(Math.min(sk.length, 20));
-            document.getElementById('coach-status').textContent = '● Connected';
-          }
+      @media (max-width: 1024px) {
+        #app-screen.visible {
+          grid-template-columns: 260px 1fr;
+        }
+        header {
+          padding: 0 18px;
+        }
+        h1 {
+          font-size: 18px;
+        }
+        .tagline {
+          display: none;
+        }
+        .streak-badge {
+          display: none !important;
+        }
+        .api-input {
+          width: 140px;
+        }
+        .today-bar {
+          grid-template-columns: repeat(2, 1fr);
+          padding: 8px 14px;
+        }
+        .messages {
+          padding: 14px;
+        }
+        .chat-input-area {
+          padding: 10px 14px 14px;
+        }
+        .quick-prompts {
+          padding: 8px 14px;
+        }
+        .msg {
+          max-width: 85%;
         }
       }
 
-      await loadLogs();
-      await loadStats();
-      await loadChatHistory();
+      /* ══════════════════════════════
+     MOBILE  ≤ 767px
+  ══════════════════════════════ */
+      @media (max-width: 767px) {
+        /* Auth: centred card, no slide-up */
+        #auth-screen {
+          align-items: center;
+          justify-content: center;
+          padding: 16px;
+          min-height: 100svh;
+        }
+        .auth-box {
+          width: 100%;
+          max-width: 100%;
+          padding: 28px 20px 36px;
+          border-radius: 20px;
+          box-shadow: 0 16px 50px rgba(0, 0, 0, 0.25);
+        }
+        .auth-title {
+          font-size: 20px;
+        }
+        .auth-sub {
+          font-size: 12px;
+        }
 
-      if (window.innerWidth <= 767) initMobile();
-    } catch (e) { console.error(e); doLogout(); }
-  }
+        /* App: flex column, fills viewport */
+        #app-screen.visible {
+          display: flex;
+          flex-direction: column;
+          width: 100vw;
+          max-width: 100vw;
+          min-height: 100dvh;
+          margin: 0;
+        }
 
-  function authFetch(path, opts = {}) {
-    return fetch(API_BASE + path, {
-      ...opts,
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token, ...(opts.headers || {}) }
-    });
-  }
+        .toast {
+          top: auto;
+          bottom: calc(var(--tabbar-h) + 10px);
+          right: 50%;
+          transform: translateX(50%) translateY(20px);
+          max-width: 90%; /* giới hạn chiều rộng */
+          white-space: normal; /* cho phép xuống dòng */
+          word-break: break-word; /* cắt từ nếu quá dài */
+          text-align: center; /* căn giữa nội dung */
+        }
+        .toast.show {
+          transform: translateX(50%) translateY(0);
+        }
 
-  // ── LOGS ──
-  let logs = [];
+        /* Header slim */
+        header {
+          width: 100%;
+          height: 52px;
+          min-height: 52px;
+          max-height: 52px;
+          padding: 0 12px;
+          position: sticky;
+          top: 0;
+          z-index: 40;
+          flex-shrink: 0;
+        }
+        /* --header-h: 52px; override for mobile calc */
+        .logo-icon {
+          width: 30px;
+          height: 30px;
+          border-radius: 8px;
+        }
+        .logo-icon svg {
+          width: 15px;
+          height: 15px;
+        }
+        h1 {
+          font-size: 15px;
+        }
+        .tagline {
+          display: none;
+        }
+        .streak-badge {
+          display: none !important;
+        }
+        .user-badge {
+          display: none !important;
+        }
+        .logout-btn {
+          display: none !important;
+        }
 
-  async function loadLogs() {
-    const res = await authFetch('/logs');
-    if (!res.ok) return;
-    logs = await res.json();
-    updateHistoryList();
-    const today = new Date().toISOString().split('T')[0];
-    const tl = logs.find(l => l.log_date === today);
-    if (tl) {
-      updateTodayBar(tl);
-      ['sleep','water','exercise','stress'].forEach(k => {
-        document.getElementById(k+'-slider').value = tl[k];
-        updateSlider(k);
-      });
-      document.querySelectorAll('.mood-btn').forEach(b => b.classList.toggle('selected', b.textContent === tl.mood));
-      selectedMood = tl.mood;
-    }
-  }
+        /* Mobile name pill visible */
+        .mobile-name {
+          display: block;
+          font-size: 12px;
+          font-weight: 500;
+          color: var(--teal-dark);
+          background: var(--teal-light);
+          padding: 4px 10px;
+          border-radius: 14px;
+          max-width: 90px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
 
-  async function loadStats() {
-    const res = await authFetch('/logs/stats');
-    if (!res.ok) return;
-    const s = await res.json();
-    if (s.total_days > 0) {
-      document.getElementById('stats-card').style.display = 'block';
-      document.getElementById('stat-sleep').textContent = (s.avg_sleep||0)+'h';
-      document.getElementById('stat-water').textContent = (s.avg_water||0)+'💧';
-      document.getElementById('stat-exercise').textContent = (s.avg_exercise||0)+'m';
-      document.getElementById('stat-stress').textContent = (s.avg_stress||0)+'/10';
-    }
-    if (s.streak > 0) {
-      const b = document.getElementById('streak-badge');
-      b.style.display = 'block'; b.textContent = `🔥 ${s.streak}-day streak`;
-    }
-  }
+        /* Sidebar = bottom drawer, full width */
+        .sidebar {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          top: auto;
+          width: 100%;
+          max-width: 100%;
+          height: 90svh;
+          max-height: 90svh;
+          border-right: none;
+          border-radius: 20px 20px 0 0;
+          border-top: 1px solid var(--border);
+          z-index: 60;
+          transform: translateY(100%);
+          transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+          box-shadow: 0 -12px 50px rgba(0, 0, 0, 0.15);
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
+          padding: 0 16px calc(var(--tabbar-h) + 16px);
+        }
+        .sidebar.open {
+          transform: translateY(0);
+        }
 
-  async function logDay() {
-    const btn = document.getElementById('log-btn');
-    btn.disabled = true; btn.textContent = 'Saving…';
-    const entry = {
-      sleep: parseFloat(document.getElementById('sleep-slider').value),
-      water: parseInt(document.getElementById('water-slider').value),
-      exercise: parseInt(document.getElementById('exercise-slider').value),
-      stress: parseInt(document.getElementById('stress-slider').value),
-      mood: selectedMood,
-      notes: document.getElementById('notes-field').value.trim() || null,
-      log_date: new Date().toISOString().split('T')[0]
-    };
-    try {
-      const res = await authFetch('/logs', { method: 'POST', body: JSON.stringify(entry) });
-      if (!res.ok) { const d = await res.json(); throw new Error(d.error||'Failed'); }
-      const saved = await res.json();
-      showToast(saved.updated ? '✓ Log updated!' : '✓ Today logged!');
-      updateTodayBar(saved);
-      await loadLogs(); await loadStats();
-      hideEmptyState();
-      if (window.innerWidth <= 767) closeSidebar();
-    } catch (e) { showToast('❌ '+e.message, true); }
-    finally { btn.disabled = false; btn.textContent = '✓ Log Today'; }
-  }
+        /* Drawer handle pill */
+        .sidebar::before {
+          content: "";
+          display: block;
+          width: 40px;
+          height: 4px;
+          background: var(--border);
+          border-radius: 2px;
+          margin: 12px auto 16px;
+        }
 
-  function updateTodayBar(e) {
-    const bar = document.getElementById('today-bar');
-    const c = (v, g, y) => v >= g ? '#1D9E75' : v >= y ? '#EF9F27' : '#D85A30';
-    bar.innerHTML = `
-      <div class="stat-pill"><div class="stat-dot" style="background:${c(e.sleep,7,6)}"></div>Sleep ${e.sleep}h</div>
-      <div class="stat-pill"><div class="stat-dot" style="background:${c(e.water,8,5)}"></div>Water ${e.water}gl</div>
-      <div class="stat-pill"><div class="stat-dot" style="background:${c(e.exercise,30,15)}"></div>Move ${e.exercise}m</div>
-      <div class="stat-pill"><div class="stat-dot" style="background:${e.stress<=4?'#1D9E75':e.stress<=7?'#EF9F27':'#D85A30'}"></div>Stress ${e.stress}/10</div>`;
-  }
+        /* Backdrop */
+        .drawer-backdrop {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 55;
+          backdrop-filter: blur(3px);
+          -webkit-backdrop-filter: blur(3px);
+        }
+        .drawer-backdrop.open {
+          display: block;
+        }
 
-  function updateHistoryList() {
-    const list = document.getElementById('history-list');
-    if (!logs.length) { list.innerHTML = '<div style="font-size:12px;color:var(--text-light);text-align:center;padding:12px;font-style:italic">No logs yet!</div>'; return; }
-    list.innerHTML = logs.slice(0,7).map(l => {
-      const ds = new Date(l.log_date).toLocaleDateString('en-GB', { weekday:'short', day:'numeric', month:'short' });
-      return `<div class="history-item">
+        /* Chat panel */
+        .chat-panel {
+          /* flex: 1; */
+          width: 100%;
+          min-height: 0;
+          /* 52px header + 60px tabbar */
+          height: calc(100dvh - 52px - var(--tabbar-h));
+        }
+
+        /* Chat header stacked */
+        .chat-header {
+          padding: 10px 12px;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 7px;
+        }
+        .api-key-section {
+          display: grid;
+          grid-template-columns: 1fr auto auto;
+          gap: 6px;
+          width: 100%;
+        }
+        .api-input {
+          width: 100%;
+          font-size: 14px;
+          padding: 8px 11px;
+        }
+        .save-key-btn {
+          padding: 8px 11px;
+          font-size: 12px;
+        }
+        .clear-chat-btn {
+          padding: 8px 10px;
+          font-size: 13px;
+        }
+
+        /* Today bar 2-col */
+        .today-bar {
+          grid-template-columns: 1fr 1fr;
+          padding: 7px 12px;
+          gap: 5px;
+        }
+        .stat-pill {
+          font-size: 11px;
+          padding: 5px 8px;
+        }
+
+        /* Messages */
+        .messages {
+          padding: 10px 12px;
+          gap: 10px;
+        }
+        .msg {
+          max-width: 88%;
+        }
+        .msg-bubble {
+          font-size: 13px;
+          padding: 10px 13px;
+        }
+
+        /* Quick prompts: scroll horizontal */
+        .quick-prompts {
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          padding: 8px 12px;
+          gap: 6px;
+          scrollbar-width: none;
+        }
+        .quick-prompts::-webkit-scrollbar {
+          display: none;
+        }
+        .qp-btn {
+          flex-shrink: 0;
+          font-size: 11px;
+          padding: 5px 10px;
+        }
+
+        /* Chat input */
+        .chat-input-area {
+          padding: 8px 12px 10px;
+          gap: 8px;
+        }
+        .chat-textarea {
+          font-size: 16px; /* stops iOS zoom */
+          min-height: 42px;
+        }
+        .send-btn {
+          width: 42px;
+          height: 42px;
+        }
+
+        /* Stats 2×2 */
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .stat-num {
+          font-size: 16px;
+        }
+
+        /* History compact */
+        .history-item {
+          padding: 8px 12px;
+        }
+
+        /* Toast above tabbar */
+        .toast {
+          bottom: calc(var(--tabbar-h) + 10px);
+        }
+
+        /* Bottom tab bar */
+        .mobile-tabbar {
+          display: flex;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: var(--tabbar-h);
+          background: var(--card);
+          border-top: 1px solid var(--border);
+          z-index: 50;
+          box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.08);
+          padding-bottom: env(safe-area-inset-bottom, 0);
+        }
+
+        .tab-item {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 2px;
+          cursor: pointer;
+          color: var(--text-light);
+          font-size: 10px;
+          font-weight: 500;
+          transition: color 0.15s;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .tab-item.active {
+          color: var(--teal);
+        }
+        .tab-icon {
+          font-size: 20px;
+          line-height: 1;
+        }
+      }
+
+      /* ══════════════════════════════
+     VERY SMALL  ≤ 380px
+  ══════════════════════════════ */
+      @media (max-width: 380px) {
+        .auth-box {
+          padding: 22px 16px 32px;
+        }
+        .auth-title {
+          font-size: 18px;
+        }
+        .msg {
+          max-width: 94%;
+        }
+        .api-key-section {
+          grid-template-columns: 1fr auto;
+        }
+        .save-key-btn {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── AUTH SCREEN ── -->
+    <div id="auth-screen">
+      <div class="auth-box">
+        <div class="auth-logo">
+          <div class="auth-logo-icon">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"
+              />
+              <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+              <line x1="9" y1="9" x2="9.01" y2="9" />
+              <line x1="15" y1="9" x2="15.01" y2="9" />
+            </svg>
+          </div>
+          <div>
+            <div class="auth-title">WellCoach AI</div>
+            <div class="auth-sub">Your personal wellness companion</div>
+          </div>
+        </div>
+
+        <div class="auth-tabs">
+          <div
+            class="auth-tab active"
+            id="tab-login"
+            onclick="switchTab('login')"
+          >
+            Sign In
+          </div>
+          <div
+            class="auth-tab"
+            id="tab-register"
+            onclick="switchTab('register')"
+          >
+            Create Account
+          </div>
+        </div>
+
+        <div class="auth-error" id="auth-error"></div>
+
+        <div id="form-login">
+          <div class="auth-field">
+            <label>EMAIL</label>
+            <input
+              type="email"
+              id="login-email"
+              placeholder="you@example.com"
+              autocomplete="email"
+            />
+          </div>
+          <div class="auth-field">
+            <label>PASSWORD</label>
+            <input
+              type="password"
+              id="login-password"
+              placeholder="••••••••"
+              autocomplete="current-password"
+              onkeydown="if (event.key === 'Enter') doLogin();"
+            />
+          </div>
+          <button class="auth-btn" id="login-btn" onclick="doLogin()">
+            Sign In
+          </button>
+        </div>
+
+        <div id="form-register" style="display: none">
+          <div class="auth-field">
+            <label>FULL NAME</label>
+            <input
+              type="text"
+              id="reg-name"
+              placeholder="Your name"
+              autocomplete="name"
+            />
+          </div>
+          <div class="auth-field">
+            <label>EMAIL</label>
+            <input
+              type="email"
+              id="reg-email"
+              placeholder="you@example.com"
+              autocomplete="email"
+            />
+          </div>
+          <div class="auth-field">
+            <label>PASSWORD (min. 6 characters)</label>
+            <input
+              type="password"
+              id="reg-password"
+              placeholder="••••••••"
+              autocomplete="new-password"
+              onkeydown="if (event.key === 'Enter') doRegister();"
+            />
+          </div>
+          <button class="auth-btn" id="register-btn" onclick="doRegister()">
+            Create Account
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── APP SCREEN ── -->
+    <div id="app-screen">
+      <header>
+        <div class="logo">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"
+              />
+              <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+              <line x1="9" y1="9" x2="9.01" y2="9" />
+              <line x1="15" y1="9" x2="15.01" y2="9" />
+            </svg>
+          </div>
+          <div>
+            <h1>WellCoach AI</h1>
+            <div class="tagline">Your personal wellness companion</div>
+          </div>
+        </div>
+        <div class="header-right" id="header-right">
+          <div class="streak-badge" id="streak-badge" style="display: none">
+            🔥 0-day streak
+          </div>
+          <div class="user-badge">👤 <span id="user-name-display">—</span></div>
+          <button class="logout-btn" onclick="doLogout()">Sign out</button>
+        </div>
+      </header>
+
+      <aside class="sidebar">
+        <div class="section-label">Today's Check-in</div>
+        <div class="checkin-card">
+          <div class="metric-row">
+            <div class="metric-header">
+              <div class="metric-label">
+                <span class="metric-emoji">😴</span> Sleep
+              </div>
+              <div class="metric-value" id="sleep-val">7h</div>
+            </div>
+            <input
+              type="range"
+              min="3"
+              max="12"
+              step="0.5"
+              value="7"
+              id="sleep-slider"
+              oninput="updateSlider('sleep')"
+            />
+          </div>
+          <div class="metric-row">
+            <div class="metric-header">
+              <div class="metric-label">
+                <span class="metric-emoji">💧</span> Water
+              </div>
+              <div class="metric-value" id="water-val">6 glasses</div>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="12"
+              step="1"
+              value="6"
+              id="water-slider"
+              oninput="updateSlider('water')"
+            />
+          </div>
+          <div class="metric-row">
+            <div class="metric-header">
+              <div class="metric-label">
+                <span class="metric-emoji">🏃</span> Exercise
+              </div>
+              <div class="metric-value" id="exercise-val">30 min</div>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="120"
+              step="5"
+              value="30"
+              id="exercise-slider"
+              oninput="updateSlider('exercise')"
+            />
+          </div>
+          <div class="metric-row">
+            <div class="metric-header">
+              <div class="metric-label">
+                <span class="metric-emoji">🌡️</span> Stress
+              </div>
+              <div class="metric-value" id="stress-val">5/10</div>
+            </div>
+            <input
+              type="range"
+              min="1"
+              max="10"
+              step="1"
+              value="5"
+              id="stress-slider"
+              oninput="updateSlider('stress')"
+            />
+          </div>
+          <div class="metric-row">
+            <div class="metric-label" style="margin-bottom: 10px">
+              <span class="metric-emoji">😊</span> Mood
+            </div>
+            <div class="mood-grid">
+              <button class="mood-btn" onclick="selectMood(this, '😞')">
+                😞
+              </button>
+              <button class="mood-btn" onclick="selectMood(this, '😕')">
+                😕
+              </button>
+              <button
+                class="mood-btn selected"
+                onclick="selectMood(this, '😐')"
+              >
+                😐
+              </button>
+              <button class="mood-btn" onclick="selectMood(this, '🙂')">
+                🙂
+              </button>
+              <button class="mood-btn" onclick="selectMood(this, '😄')">
+                😄
+              </button>
+            </div>
+          </div>
+          <textarea
+            class="notes-field"
+            id="notes-field"
+            placeholder="Optional notes…"
+            rows="2"
+          ></textarea>
+          <button class="submit-btn" id="log-btn" onclick="logDay()">
+            ✓ Log Today
+          </button>
+        </div>
+
+        <div class="stats-card" id="stats-card" style="display: none">
+          <div class="section-label" style="margin-bottom: 10px">
+            7-Day Averages
+          </div>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-num" id="stat-sleep">—</div>
+              <div class="stat-lbl">Sleep</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num" id="stat-water">—</div>
+              <div class="stat-lbl">Water</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num" id="stat-exercise">—</div>
+              <div class="stat-lbl">Exercise</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num" id="stat-stress">—</div>
+              <div class="stat-lbl">Stress</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="history-section">
+          <div class="section-label">Recent Logs</div>
+          <div id="history-list">
+            <div
+              style="
+                font-size: 12px;
+                color: var(--text-light);
+                text-align: center;
+                padding: 12px;
+                font-style: italic;
+              "
+            >
+              Loading…
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <div class="chat-panel">
+        <div class="chat-header">
+          <div class="coach-info">
+            <div class="coach-avatar">🌿</div>
+            <div>
+              <div class="coach-name">Wellness Coach</div>
+              <div class="coach-status" id="coach-status">● Ready</div>
+            </div>
+          </div>
+          <div class="api-key-section">
+            <input
+              type="password"
+              class="api-input"
+              id="api-key-input"
+              placeholder="Paste Anthropic API key…"
+            />
+            <button class="save-key-btn" onclick="saveKey()">Connect</button>
+            <button class="clear-chat-btn" onclick="clearChat()">🗑</button>
+          </div>
+        </div>
+
+        <div class="today-bar" id="today-bar">
+          <div class="no-log-msg">Log your day to see today's stats here</div>
+        </div>
+
+        <div class="messages" id="messages">
+          <div class="empty-state" id="empty-state">
+            <div class="empty-icon">🌱</div>
+            <div class="empty-title">Welcome to WellCoach AI</div>
+            <div class="empty-sub">
+              Log today's check-in, then chat with your AI coach about your
+              wellness.
+            </div>
+          </div>
+        </div>
+
+        <div class="quick-prompts">
+          <button
+            class="qp-btn"
+            onclick="sendQuick('How am I doing this week?')"
+          >
+            📊 Weekly summary
+          </button>
+          <button
+            class="qp-btn"
+            onclick="sendQuick('What can I do to sleep better?')"
+          >
+            😴 Sleep tips
+          </button>
+          <button
+            class="qp-btn"
+            onclick="sendQuick('I\'m feeling stressed. What should I do?')"
+          >
+            🌡️ Stress help
+          </button>
+          <button
+            class="qp-btn"
+            onclick="sendQuick('Give me a wellness tip for today')"
+          >
+            💡 Daily tip
+          </button>
+          <button
+            class="qp-btn"
+            onclick="sendQuick('What patterns do you see in my recent logs?')"
+          >
+            🔍 My patterns
+          </button>
+        </div>
+
+        <div class="chat-input-area">
+          <textarea
+            class="chat-textarea"
+            id="chat-input"
+            placeholder="Ask your wellness coach anything…"
+            rows="1"
+            onkeydown="handleKey(event)"
+            oninput="autoResize(this)"
+          ></textarea>
+          <button class="send-btn" onclick="sendMessage()">
+            <svg viewBox="0 0 24 24">
+              <line x1="22" y1="2" x2="11" y2="13" />
+              <polygon points="22 2 15 22 11 13 2 9 22 2" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+    <div
+      class="drawer-backdrop"
+      id="drawer-backdrop"
+      onclick="closeSidebar()"
+    ></div>
+
+    <!-- Mobile tab bar – hidden until login -->
+    <div class="mobile-tabbar" id="mobile-tabbar" style="display: none">
+      <div class="tab-item active" id="tab-chat" onclick="mobileTab('chat')">
+        <div class="tab-icon">💬</div>
+        <span>Chat</span>
+      </div>
+      <div class="tab-item" id="tab-checkin" onclick="mobileTab('checkin')">
+        <div class="tab-icon">📋</div>
+        <span>Check-in</span>
+      </div>
+      <div class="tab-item" id="tab-history" onclick="mobileTab('history')">
+        <div class="tab-icon">📈</div>
+        <span>History</span>
+      </div>
+      <div class="tab-item" id="tab-me" onclick="mobileTab('me')">
+        <div class="tab-icon">👤</div>
+        <span>Me</span>
+      </div>
+    </div>
+
+    <script>
+      const API_BASE = window.location.origin + "/api";
+      let token = localStorage.getItem("wc_token") || null;
+      let currentUser = null;
+      let selectedMood = "😐";
+      let apiKey = "";
+
+      window.onload = async () => {
+        if (token) await loadApp();
+      };
+
+      // ── AUTH ──
+      function switchTab(tab) {
+        document
+          .getElementById("tab-login")
+          .classList.toggle("active", tab === "login");
+        document
+          .getElementById("tab-register")
+          .classList.toggle("active", tab === "register");
+        document.getElementById("form-login").style.display =
+          tab === "login" ? "block" : "none";
+        document.getElementById("form-register").style.display =
+          tab === "register" ? "block" : "none";
+        document.getElementById("auth-error").style.display = "none";
+      }
+
+      function setAuthError(msg) {
+        const el = document.getElementById("auth-error");
+        el.textContent = msg;
+        el.style.display = msg ? "block" : "none";
+      }
+
+      async function doLogin() {
+        const email = document.getElementById("login-email").value.trim();
+        const password = document.getElementById("login-password").value;
+        if (!email || !password)
+          return setAuthError("Please enter email and password");
+        const btn = document.getElementById("login-btn");
+        btn.disabled = true;
+        btn.textContent = "Signing in…";
+        setAuthError("");
+        try {
+          const res = await fetch(`${API_BASE}/auth/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || "Login failed");
+          token = data.token;
+          localStorage.setItem("wc_token", token);
+          await loadApp();
+        } catch (e) {
+          setAuthError(e.message);
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "Sign In";
+        }
+      }
+
+      async function doRegister() {
+        const name = document.getElementById("reg-name").value.trim();
+        const email = document.getElementById("reg-email").value.trim();
+        const password = document.getElementById("reg-password").value;
+        if (!name || !email || !password)
+          return setAuthError("Please fill all fields");
+        const btn = document.getElementById("register-btn");
+        btn.disabled = true;
+        btn.textContent = "Creating account…";
+        setAuthError("");
+        try {
+          const res = await fetch(`${API_BASE}/auth/register`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, password }),
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || "Registration failed");
+          token = data.token;
+          localStorage.setItem("wc_token", token);
+          await loadApp();
+        } catch (e) {
+          setAuthError(e.message);
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "Create Account";
+        }
+      }
+
+      function doLogout() {
+        localStorage.removeItem("wc_token");
+        token = null;
+        currentUser = null;
+        apiKey = "";
+        document.getElementById("auth-screen").style.display = "flex";
+        document.getElementById("app-screen").classList.remove("visible");
+        document.getElementById("messages").innerHTML =
+          '<div class="empty-state" id="empty-state"><div class="empty-icon">🌱</div><div class="empty-title">Welcome to WellCoach AI</div><div class="empty-sub">Log today\'s check-in, then chat with your AI coach.</div></div>';
+        document.getElementById("mobile-tabbar").style.display = "none";
+        closeSidebar();
+        const b = document.getElementById("mobile-name-badge");
+        if (b) b.remove();
+        const mp = document.getElementById("me-panel");
+        if (mp) mp.remove();
+      }
+
+      // ── APP LOAD ──
+      async function loadApp() {
+        try {
+          const res = await authFetch("/auth/me");
+          if (!res.ok) {
+            doLogout();
+            return;
+          }
+          currentUser = await res.json();
+
+          document.getElementById("auth-screen").style.display = "none";
+          document.getElementById("app-screen").classList.add("visible");
+          document.getElementById("user-name-display").textContent =
+            currentUser.name;
+
+          if (currentUser.hasApiKey) {
+            const keyRes = await authFetch("/auth/apikey");
+            if (keyRes.ok) {
+              const { apiKey: sk } = await keyRes.json();
+              if (sk) {
+                apiKey = sk;
+                document.getElementById("api-key-input").value = "•".repeat(
+                  Math.min(sk.length, 20),
+                );
+                document.getElementById("coach-status").textContent =
+                  "● Connected";
+              }
+            }
+          }
+
+          await loadLogs();
+          await loadStats();
+          await loadChatHistory();
+
+          if (window.innerWidth <= 767) initMobile();
+        } catch (e) {
+          console.error(e);
+          doLogout();
+        }
+      }
+
+      function authFetch(path, opts = {}) {
+        return fetch(API_BASE + path, {
+          ...opts,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+            ...(opts.headers || {}),
+          },
+        });
+      }
+
+      // ── LOGS ──
+      let logs = [];
+
+      async function loadLogs() {
+        const res = await authFetch("/logs");
+        if (!res.ok) return;
+        logs = await res.json();
+        updateHistoryList();
+        const today = new Date().toISOString().split("T")[0];
+        const tl = logs.find((l) => l.log_date === today);
+        if (tl) {
+          updateTodayBar(tl);
+          ["sleep", "water", "exercise", "stress"].forEach((k) => {
+            document.getElementById(k + "-slider").value = tl[k];
+            updateSlider(k);
+          });
+          document
+            .querySelectorAll(".mood-btn")
+            .forEach((b) =>
+              b.classList.toggle("selected", b.textContent === tl.mood),
+            );
+          selectedMood = tl.mood;
+        }
+      }
+
+      async function loadStats() {
+        const res = await authFetch("/logs/stats");
+        if (!res.ok) return;
+        const s = await res.json();
+        if (s.total_days > 0) {
+          document.getElementById("stats-card").style.display = "block";
+          document.getElementById("stat-sleep").textContent =
+            (s.avg_sleep || 0) + "h";
+          document.getElementById("stat-water").textContent =
+            (s.avg_water || 0) + "💧";
+          document.getElementById("stat-exercise").textContent =
+            (s.avg_exercise || 0) + "m";
+          document.getElementById("stat-stress").textContent =
+            (s.avg_stress || 0) + "/10";
+        }
+        if (s.streak > 0) {
+          const b = document.getElementById("streak-badge");
+          b.style.display = "block";
+          b.textContent = `🔥 ${s.streak}-day streak`;
+        }
+      }
+
+      async function logDay() {
+        const btn = document.getElementById("log-btn");
+        btn.disabled = true;
+        btn.textContent = "Saving…";
+        const entry = {
+          sleep: parseFloat(document.getElementById("sleep-slider").value),
+          water: parseInt(document.getElementById("water-slider").value),
+          exercise: parseInt(document.getElementById("exercise-slider").value),
+          stress: parseInt(document.getElementById("stress-slider").value),
+          mood: selectedMood,
+          notes: document.getElementById("notes-field").value.trim() || null,
+          log_date: new Date().toISOString().split("T")[0],
+        };
+        try {
+          const res = await authFetch("/logs", {
+            method: "POST",
+            body: JSON.stringify(entry),
+          });
+          if (!res.ok) {
+            const d = await res.json();
+            throw new Error(d.error || "Failed");
+          }
+          const saved = await res.json();
+          showToast(saved.updated ? "✓ Log updated!" : "✓ Today logged!");
+          updateTodayBar(saved);
+          await loadLogs();
+          await loadStats();
+          hideEmptyState();
+          if (window.innerWidth <= 767) closeSidebar();
+        } catch (e) {
+          showToast("❌ " + e.message, true);
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "✓ Log Today";
+        }
+      }
+
+      function updateTodayBar(e) {
+        const bar = document.getElementById("today-bar");
+        const c = (v, g, y) =>
+          v >= g ? "#1D9E75" : v >= y ? "#EF9F27" : "#D85A30";
+        bar.innerHTML = `
+      <div class="stat-pill"><div class="stat-dot" style="background:${c(e.sleep, 7, 6)}"></div>Sleep ${e.sleep}h</div>
+      <div class="stat-pill"><div class="stat-dot" style="background:${c(e.water, 8, 5)}"></div>Water ${e.water}gl</div>
+      <div class="stat-pill"><div class="stat-dot" style="background:${c(e.exercise, 30, 15)}"></div>Move ${e.exercise}m</div>
+      <div class="stat-pill"><div class="stat-dot" style="background:${e.stress <= 4 ? "#1D9E75" : e.stress <= 7 ? "#EF9F27" : "#D85A30"}"></div>Stress ${e.stress}/10</div>`;
+      }
+
+      function updateHistoryList() {
+        const list = document.getElementById("history-list");
+        if (!logs.length) {
+          list.innerHTML =
+            '<div style="font-size:12px;color:var(--text-light);text-align:center;padding:12px;font-style:italic">No logs yet!</div>';
+          return;
+        }
+        list.innerHTML = logs
+          .slice(0, 7)
+          .map((l) => {
+            const ds = new Date(l.log_date).toLocaleDateString("en-GB", {
+              weekday: "short",
+              day: "numeric",
+              month: "short",
+            });
+            return `<div class="history-item">
         <div><div style="font-size:13px;font-weight:500">${ds}</div>
         <div class="history-date">${l.mood} ${l.sleep}h · ${l.water}💧 · ${l.exercise}min</div></div>
         <div class="history-dots">
-          <div class="hdot" style="background:${l.sleep>=7?'#1D9E75':'#D85A30'}"></div>
-          <div class="hdot" style="background:${l.water>=8?'#1D9E75':'#EF9F27'}"></div>
-          <div class="hdot" style="background:${l.exercise>=30?'#1D9E75':'#EF9F27'}"></div>
-          <div class="hdot" style="background:${l.stress<=5?'#1D9E75':'#D85A30'}"></div>
+          <div class="hdot" style="background:${l.sleep >= 7 ? "#1D9E75" : "#D85A30"}"></div>
+          <div class="hdot" style="background:${l.water >= 8 ? "#1D9E75" : "#EF9F27"}"></div>
+          <div class="hdot" style="background:${l.exercise >= 30 ? "#1D9E75" : "#EF9F27"}"></div>
+          <div class="hdot" style="background:${l.stress <= 5 ? "#1D9E75" : "#D85A30"}"></div>
         </div></div>`;
-    }).join('');
-  }
+          })
+          .join("");
+      }
 
-  // ── CHAT ──
-  async function loadChatHistory() {
-    const res = await authFetch('/chat/history?limit=30');
-    if (!res.ok) return;
-    const msgs = await res.json();
-    if (msgs.length) {
-      hideEmptyState();
-      msgs.forEach(m => m.role==='user' ? addUserMessage(m.content, new Date(m.created_at)) : addAIMessage(m.content, new Date(m.created_at)));
-    }
-  }
+      // ── CHAT ──
+      async function loadChatHistory() {
+        const res = await authFetch("/chat/history?limit=30");
+        if (!res.ok) return;
+        const msgs = await res.json();
+        if (msgs.length) {
+          hideEmptyState();
+          msgs.forEach((m) =>
+            m.role === "user"
+              ? addUserMessage(m.content, new Date(m.created_at))
+              : addAIMessage(m.content, new Date(m.created_at)),
+          );
+        }
+      }
 
-  async function clearChat() {
-    if (!confirm('Clear all chat history?')) return;
-    await authFetch('/chat/history', { method:'DELETE' });
-    document.getElementById('messages').innerHTML = '<div class="empty-state" id="empty-state"><div class="empty-icon">🌱</div><div class="empty-title">Chat cleared</div><div class="empty-sub">Start a new conversation.</div></div>';
-    showToast('Chat history cleared');
-  }
+      async function clearChat() {
+        if (!confirm("Clear all chat history?")) return;
+        await authFetch("/chat/history", { method: "DELETE" });
+        document.getElementById("messages").innerHTML =
+          '<div class="empty-state" id="empty-state"><div class="empty-icon">🌱</div><div class="empty-title">Chat cleared</div><div class="empty-sub">Start a new conversation.</div></div>';
+        showToast("Chat history cleared");
+      }
 
-  async function saveKey() {
-    const input = document.getElementById('api-key-input');
-    const key = input.value.trim();
-    if (!key || key.includes('•')) { showToast('Please enter a new API key'); return; }
-    apiKey = key;
-    input.value = '•'.repeat(Math.min(key.length, 20));
-    await authFetch('/auth/apikey', { method:'PUT', body:JSON.stringify({ apiKey:key }) });
-    document.getElementById('coach-status').textContent = '● Connected';
-    showToast('✅ API key saved!');
-    hideEmptyState();
-    addAIMessage(`Hello, ${currentUser?.name||'there'}! 👋 I'm your WellCoach AI. Log your daily check-in and I'll give you personalised wellness insights!`);
-  }
+      async function saveKey() {
+        const input = document.getElementById("api-key-input");
+        const key = input.value.trim();
+        if (!key || key.includes("•")) {
+          showToast("Please enter a new API key");
+          return;
+        }
+        apiKey = key;
+        input.value = "•".repeat(Math.min(key.length, 20));
+        await authFetch("/auth/apikey", {
+          method: "PUT",
+          body: JSON.stringify({ apiKey: key }),
+        });
+        document.getElementById("coach-status").textContent = "● Connected";
+        showToast("✅ API key saved!");
+        hideEmptyState();
+        addAIMessage(
+          `Hello, ${currentUser?.name || "there"}! 👋 I'm your WellCoach AI. Log your daily check-in and I'll give you personalised wellness insights!`,
+        );
+      }
 
-  async function sendMessage() {
-    const input = document.getElementById('chat-input');
-    const text = input.value.trim();
-    if (!text) return;
-    if (!apiKey) { showToast('Please paste your Anthropic API key first', true); return; }
-    hideEmptyState();
-    addUserMessage(text);
-    input.value = ''; input.style.height = 'auto';
-    showTyping();
-    document.getElementById('coach-status').textContent = '● Thinking…';
-    try {
-      const res = await authFetch('/chat/send', { method:'POST', body:JSON.stringify({ message:text }) });
-      removeTyping();
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error||'API error');
-      addAIMessage(data.reply);
-      document.getElementById('coach-status').textContent = '● Ready';
-      document.getElementById('coach-status').style.color = 'var(--teal)';
-    } catch (e) {
-      removeTyping();
-      addAIMessage('⚠️ '+e.message);
-      document.getElementById('coach-status').textContent = '● Error';
-      document.getElementById('coach-status').style.color = 'var(--coral)';
-    }
-  }
+      async function sendMessage() {
+        const input = document.getElementById("chat-input");
+        const text = input.value.trim();
+        if (!text) return;
+        if (!apiKey) {
+          showToast("Please paste your Anthropic API key first", true);
+          return;
+        }
+        hideEmptyState();
+        addUserMessage(text);
+        input.value = "";
+        input.style.height = "auto";
+        showTyping();
+        document.getElementById("coach-status").textContent = "● Thinking…";
+        try {
+          const res = await authFetch("/chat/send", {
+            method: "POST",
+            body: JSON.stringify({ message: text }),
+          });
+          removeTyping();
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || "API error");
+          addAIMessage(data.reply);
+          document.getElementById("coach-status").textContent = "● Ready";
+          document.getElementById("coach-status").style.color = "var(--teal)";
+        } catch (e) {
+          removeTyping();
+          addAIMessage("⚠️ " + e.message);
+          document.getElementById("coach-status").textContent = "● Error";
+          document.getElementById("coach-status").style.color = "var(--coral)";
+        }
+      }
 
-  function sendQuick(text) { document.getElementById('chat-input').value = text; sendMessage(); }
+      function sendQuick(text) {
+        document.getElementById("chat-input").value = text;
+        sendMessage();
+      }
 
-  function addUserMessage(text, date) {
-    const msgs = document.getElementById('messages');
-    const time = (date||new Date()).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
-    const div = document.createElement('div');
-    div.className = 'msg user';
-    div.innerHTML = `<div class="msg-bubble">${escapeHtml(text)}</div><div class="msg-time">${time}</div>`;
-    msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight;
-  }
+      function addUserMessage(text, date) {
+        const msgs = document.getElementById("messages");
+        const time = (date || new Date()).toLocaleTimeString("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+        const div = document.createElement("div");
+        div.className = "msg user";
+        div.innerHTML = `<div class="msg-bubble">${escapeHtml(text)}</div><div class="msg-time">${time}</div>`;
+        msgs.appendChild(div);
+        msgs.scrollTop = msgs.scrollHeight;
+      }
 
-  function addAIMessage(text, date) {
-    const msgs = document.getElementById('messages');
-    const time = (date||new Date()).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
-    const div = document.createElement('div');
-    div.className = 'msg ai';
-    div.innerHTML = `<div class="msg-bubble">${formatText(text)}</div><div class="msg-time">WellCoach · ${time}</div>`;
-    msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight;
-  }
+      function addAIMessage(text, date) {
+        const msgs = document.getElementById("messages");
+        const time = (date || new Date()).toLocaleTimeString("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+        const div = document.createElement("div");
+        div.className = "msg ai";
+        div.innerHTML = `<div class="msg-bubble">${formatText(text)}</div><div class="msg-time">WellCoach · ${time}</div>`;
+        msgs.appendChild(div);
+        msgs.scrollTop = msgs.scrollHeight;
+      }
 
-  function showTyping() {
-    const msgs = document.getElementById('messages');
-    const div = document.createElement('div');
-    div.className = 'msg ai'; div.id = 'typing';
-    div.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
-    msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight;
-  }
-  function removeTyping() { const t = document.getElementById('typing'); if (t) t.remove(); }
-  function hideEmptyState() { const e = document.getElementById('empty-state'); if (e) e.style.display = 'none'; }
+      function showTyping() {
+        const msgs = document.getElementById("messages");
+        const div = document.createElement("div");
+        div.className = "msg ai";
+        div.id = "typing";
+        div.innerHTML =
+          '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+        msgs.appendChild(div);
+        msgs.scrollTop = msgs.scrollHeight;
+      }
+      function removeTyping() {
+        const t = document.getElementById("typing");
+        if (t) t.remove();
+      }
+      function hideEmptyState() {
+        const e = document.getElementById("empty-state");
+        if (e) e.style.display = "none";
+      }
 
-  function updateSlider(type) {
-    const val = parseFloat(document.getElementById(type+'-slider').value);
-    const d = document.getElementById(type+'-val');
-    if (type==='sleep') d.textContent = val+'h';
-    else if (type==='water') d.textContent = val+' glasses';
-    else if (type==='exercise') d.textContent = val+' min';
-    else if (type==='stress') d.textContent = val+'/10';
-  }
+      function updateSlider(type) {
+        const val = parseFloat(document.getElementById(type + "-slider").value);
+        const d = document.getElementById(type + "-val");
+        if (type === "sleep") d.textContent = val + "h";
+        else if (type === "water") d.textContent = val + " glasses";
+        else if (type === "exercise") d.textContent = val + " min";
+        else if (type === "stress") d.textContent = val + "/10";
+      }
 
-  function selectMood(btn, mood) {
-    document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected'); selectedMood = mood;
-  }
+      function selectMood(btn, mood) {
+        document
+          .querySelectorAll(".mood-btn")
+          .forEach((b) => b.classList.remove("selected"));
+        btn.classList.add("selected");
+        selectedMood = mood;
+      }
 
-  function handleKey(e) { if (e.key==='Enter'&&!e.shiftKey) { e.preventDefault(); sendMessage(); } }
-  function autoResize(el) { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,120)+'px'; }
+      function handleKey(e) {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          sendMessage();
+        }
+      }
+      function autoResize(el) {
+        el.style.height = "auto";
+        el.style.height = Math.min(el.scrollHeight, 120) + "px";
+      }
 
-  function showToast(msg, error=false) {
-    const t = document.getElementById('toast');
-    t.textContent = msg; t.className = 'toast'+(error?' error':'');
-    t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 3000);
-  }
+      function showToast(msg, error = false) {
+        const t = document.getElementById("toast");
+        t.textContent = msg;
+        t.className = "toast" + (error ? " error" : "");
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 3000);
+      }
 
-  function escapeHtml(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'); }
-  function formatText(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>'); }
+      function escapeHtml(t) {
+        return t
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/\n/g, "<br>");
+      }
+      function formatText(t) {
+        return t
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+          .replace(/\n/g, "<br>");
+      }
 
-  // ── MOBILE ──
-  function initMobile() {
-    document.getElementById('mobile-tabbar').style.display = 'flex';
-    const hr = document.getElementById('header-right');
-    if (currentUser && !document.getElementById('mobile-name-badge')) {
-      const b = document.createElement('div');
-      b.className = 'mobile-name'; b.id = 'mobile-name-badge';
-      b.textContent = currentUser.name.split(' ')[0];
-      hr.insertBefore(b, hr.firstChild);
-    }
-  }
+      // ── MOBILE ──
+      function initMobile() {
+        document.getElementById("mobile-tabbar").style.display = "flex";
+        const hr = document.getElementById("header-right");
+        if (currentUser && !document.getElementById("mobile-name-badge")) {
+          const b = document.createElement("div");
+          b.className = "mobile-name";
+          b.id = "mobile-name-badge";
+          b.textContent = currentUser.name.split(" ")[0];
+          hr.insertBefore(b, hr.firstChild);
+        }
+      }
 
-  function openSidebar(scrollTo) {
-    document.querySelector('.sidebar').classList.add('open');
-    document.getElementById('drawer-backdrop').classList.add('open');
-    document.body.style.overflow = 'hidden';
-    if (scrollTo === 'history') {
-      setTimeout(() => {
-        const el = document.querySelector('.history-section');
-        if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
-      }, 360);
-    }
-  }
+      function openSidebar(scrollTo) {
+        document.querySelector(".sidebar").classList.add("open");
+        document.getElementById("drawer-backdrop").classList.add("open");
+        document.body.style.overflow = "hidden";
+        if (scrollTo === "history") {
+          setTimeout(() => {
+            const el = document.querySelector(".history-section");
+            if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 360);
+        }
+      }
 
-  function closeSidebar() {
-    document.querySelector('.sidebar').classList.remove('open');
-    document.getElementById('drawer-backdrop').classList.remove('open');
-    document.body.style.overflow = '';
-  }
+      function closeSidebar() {
+        document.querySelector(".sidebar").classList.remove("open");
+        document.getElementById("drawer-backdrop").classList.remove("open");
+        document.body.style.overflow = "";
+      }
 
-  function mobileTab(tab) {
-    document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
-    document.getElementById('tab-'+tab).classList.add('active');
-    if (tab==='chat') closeSidebar();
-    else if (tab==='checkin') openSidebar('top');
-    else if (tab==='history') openSidebar('history');
-    else if (tab==='me') showMePanel();
-  }
+      function mobileTab(tab) {
+        document
+          .querySelectorAll(".tab-item")
+          .forEach((t) => t.classList.remove("active"));
+        document.getElementById("tab-" + tab).classList.add("active");
+        if (tab === "chat") closeSidebar();
+        else if (tab === "checkin") openSidebar("top");
+        else if (tab === "history") openSidebar("history");
+        else if (tab === "me") showMePanel();
+      }
 
-  function showMePanel() {
-    const ex = document.getElementById('me-panel');
-    if (ex) { ex.remove(); return; }
-    const p = document.createElement('div');
-    p.id = 'me-panel';
-    p.style.cssText = 'position:fixed;bottom:calc(60px + 8px);left:16px;right:16px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;z-index:61;box-shadow:0 8px 32px rgba(0,0,0,0.14)';
-    p.innerHTML = `
+      function showMePanel() {
+        const ex = document.getElementById("me-panel");
+        if (ex) {
+          ex.remove();
+          return;
+        }
+        const p = document.createElement("div");
+        p.id = "me-panel";
+        p.style.cssText =
+          "position:fixed;bottom:calc(60px + 8px);left:16px;right:16px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;z-index:61;box-shadow:0 8px 32px rgba(0,0,0,0.14)";
+        p.innerHTML = `
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
         <div style="width:40px;height:40px;background:var(--teal-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px">👤</div>
         <div>
-          <div style="font-weight:500;font-size:14px">${currentUser?.name||'—'}</div>
-          <div style="font-size:12px;color:var(--text-muted)">${currentUser?.email||''}</div>
+          <div style="font-weight:500;font-size:14px">${currentUser?.name || "—"}</div>
+          <div style="font-size:12px;color:var(--text-muted)">${currentUser?.email || ""}</div>
         </div>
       </div>
       <button onclick="doLogout()" style="width:100%;padding:11px;background:var(--coral-light);color:var(--coral);border:none;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer">Sign out</button>
       <button onclick="document.getElementById('me-panel').remove();mobileTab('chat')" style="width:100%;padding:8px;background:transparent;color:var(--text-light);border:none;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;margin-top:4px">Close</button>`;
-    document.body.appendChild(p);
-  }
+        document.body.appendChild(p);
+      }
 
-  // Swipe down to close drawer
-  let _ty = 0;
-  document.addEventListener('touchstart', e => { _ty = e.touches[0].clientY; }, { passive:true });
-  document.addEventListener('touchmove', e => {
-    if (document.querySelector('.sidebar').classList.contains('open') && e.touches[0].clientY - _ty > 70) closeSidebar();
-  }, { passive:true });
+      // Swipe down to close drawer
+      let _ty = 0;
+      document.addEventListener(
+        "touchstart",
+        (e) => {
+          _ty = e.touches[0].clientY;
+        },
+        { passive: true },
+      );
+      document.addEventListener(
+        "touchmove",
+        (e) => {
+          if (
+            document.querySelector(".sidebar").classList.contains("open") &&
+            e.touches[0].clientY - _ty > 70
+          )
+            closeSidebar();
+        },
+        { passive: true },
+      );
 
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 767) {
-      closeSidebar();
-      document.getElementById('mobile-tabbar').style.display = 'none';
-      const b = document.getElementById('mobile-name-badge'); if (b) b.remove();
-      const mp = document.getElementById('me-panel'); if (mp) mp.remove();
-    } else if (currentUser) {
-      initMobile();
-    }
-  });
-</script>
-</body>
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 767) {
+          closeSidebar();
+          document.getElementById("mobile-tabbar").style.display = "none";
+          const b = document.getElementById("mobile-name-badge");
+          if (b) b.remove();
+          const mp = document.getElementById("me-panel");
+          if (mp) mp.remove();
+        } else if (currentUser) {
+          initMobile();
+        }
+      });
+    </script>
+  </body>
 </html>
